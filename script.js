@@ -149,3 +149,60 @@
 
   categorySelect.addEventListener("change", () => buildPolar(categorySelect.value));
 })();
+
+// ── PEAKS GRID ────────────────────────────────────────
+(function buildPeaksGrid() {
+  const grid = document.getElementById('peaks-grid');
+  if (!grid) return;
+
+  // Group peaks by category, pick the highest avg
+  const catPeak = {};
+  peaks.forEach(p => {
+    if (!catPeak[p.category] || p.avg_per_day > catPeak[p.category].avg_per_day) {
+      catPeak[p.category] = p;
+    }
+  });
+
+  const icons = {
+    'Robbery': '🚨',
+    'Vehicle Theft': '🚗',
+    'Drug Offense': '💊',
+    'Warrants': '📋',
+    'Weapon Offense': '⚠️',
+    'Missing Person': '🔍',
+    'Non-Criminal': '📞'
+  };
+
+  const notes = {
+    'Robbery': 'Surges after midnight on weekends — peaks at 2AM Saturday',
+    'Vehicle Theft': 'Evening rush hour — both weekday 6PM and weekend 10PM',
+    'Drug Offense': 'Strongly daytime — 2PM weekday peak, fades after dark',
+    'Warrants': 'Business hours phenomenon — 4-5PM peak both days',
+    'Weapon Offense': 'Midnight weekends — but spread across whole evening',
+    'Missing Person': 'Lunchtime reports — 12PM peak holds on both day types',
+    'Non-Criminal': 'Noon peak every day — routine reporting pattern'
+  };
+
+  Object.entries(catPeak).forEach(([cat, p]) => {
+    const hLabel = p.hour === 0 ? '12AM' : p.hour < 12 ? p.hour+'AM' : p.hour === 12 ? '12PM' : (p.hour-12)+'PM';
+    const isNight = p.hour >= 20 || p.hour <= 5;
+    const accent = p.label === 'Weekend' ? '#f0622a' : '#2ab8c8';
+
+    const card = document.createElement('div');
+    card.style.cssText = `
+      padding: 20px;
+      border-radius: 16px;
+      background: rgba(10,18,32,0.6);
+      border: 1px solid rgba(240,230,208,0.08);
+      border-top: 2px solid ${accent};
+    `;
+    card.innerHTML = `
+      <div style="font-size:1.6rem;margin-bottom:10px">${icons[cat] || '•'}</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:rgba(240,230,208,0.4);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:6px">${cat}</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:${accent};line-height:1">${hLabel}</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:rgba(240,230,208,0.5);margin:4px 0 10px">${p.label} · ${p.avg_per_day.toFixed(2)} avg/day</div>
+      <div style="font-size:0.82rem;color:rgba(240,230,208,0.55);line-height:1.5">${notes[cat]||''}</div>
+    `;
+    grid.appendChild(card);
+  });
+})();

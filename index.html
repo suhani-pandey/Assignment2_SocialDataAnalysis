@@ -13,17 +13,13 @@
   --night: #050a14;
   --deep: #0a1220;
   --panel: rgba(8,16,32,0.82);
-  --paper: #f5ede0;
   --ink: #f0e6d0;
   --dim: rgba(240,230,208,0.5);
   --orange: #f0622a;
   --teal: #2ab8c8;
   --gold: #f0b930;
-  --amber: #e8892a;
-  --line: rgba(240,230,208,0.12);
+  --line: rgba(240,230,208,0.10);
   --r: 18px;
-  --glow-orange: 0 0 60px rgba(240,98,42,0.35);
-  --glow-teal: 0 0 60px rgba(42,184,200,0.25);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -35,65 +31,52 @@ body {
   overflow-x: hidden;
 }
 
-/* ── PROGRESS BAR ── */
+/* PROGRESS */
 #progress-bar {
   position: fixed; top: 0; left: 0; height: 3px; width: 0;
   background: linear-gradient(90deg, var(--teal), var(--orange), var(--gold));
-  z-index: 1000;
-  transition: width 80ms linear;
+  z-index: 1000; transition: width 80ms linear;
   box-shadow: 0 0 12px rgba(240,98,42,0.6);
 }
 
-/* ── CURSOR ── */
+/* CURSOR */
 #cursor {
   position: fixed; width: 12px; height: 12px; border-radius: 50%;
   background: var(--orange); pointer-events: none; z-index: 9999;
-  transform: translate(-50%,-50%);
-  transition: transform 60ms ease, width 200ms ease, height 200ms ease, opacity 200ms ease;
-  mix-blend-mode: screen;
+  transform: translate(-50%,-50%); mix-blend-mode: screen;
 }
 #cursor-ring {
   position: fixed; width: 40px; height: 40px; border-radius: 50%;
   border: 1px solid rgba(240,98,42,0.5); pointer-events: none; z-index: 9998;
-  transform: translate(-50%,-50%);
-  transition: transform 180ms ease, width 200ms ease, height 200ms ease;
+  transform: translate(-50%,-50%); transition: transform 180ms ease;
 }
 
-/* ── HERO / CITY ── */
+/* HERO */
 #hero {
-  position: relative;
-  height: 100vh; min-height: 600px;
+  position: relative; height: 100vh; min-height: 600px;
   display: flex; flex-direction: column; justify-content: flex-end;
   overflow: hidden;
 }
-
-#city-canvas {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-}
-
+#city-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .hero-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(5,10,20,0.96) 0%, rgba(5,10,20,0.6) 50%, rgba(5,10,20,0.2) 100%);
+  background: linear-gradient(to top, rgba(5,10,20,0.97) 0%, rgba(5,10,20,0.5) 55%, rgba(5,10,20,0.15) 100%);
   pointer-events: none;
 }
-
 .hero-content {
   position: relative; z-index: 10;
-  padding: 0 clamp(20px, 5vw, 80px) clamp(40px, 6vh, 70px);
-  max-width: 1100px;
+  padding: 0 clamp(20px, 5vw, 80px) clamp(50px, 7vh, 90px);
+  max-width: 900px;
 }
-
 .eyebrow {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase;
   color: var(--teal); margin-bottom: 14px;
   animation: fadeUp 1s ease 0.3s both;
 }
-
 h1 {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(4rem, 11vw, 10rem);
+  font-size: clamp(6rem, 11vw, 4rem);
   line-height: 0.9;
   color: var(--ink);
   text-shadow: 0 4px 40px rgba(240,98,42,0.3);
@@ -106,35 +89,48 @@ h1 em {
 }
 
 .standfirst {
-  max-width: 600px;
-  font-size: clamp(1rem, 1.8vw, 1.2rem);
-  line-height: 1.7;
-  color: var(--dim);
-  margin-top: 20px;
+  max-width: 560px;
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  line-height: 1.75; color: var(--dim);
+  margin-top: 22px;
   animation: fadeUp 1s ease 0.7s both;
 }
-
 .hero-scroll-hint {
-  position: absolute; bottom: 24px; right: clamp(20px, 5vw, 80px); z-index: 10;
+  position: absolute; bottom: 28px; right: clamp(20px, 5vw, 80px); z-index: 10;
   display: flex; flex-direction: column; align-items: center; gap: 8px;
   font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em;
   color: var(--dim); text-transform: uppercase;
-  animation: fadeUp 1s ease 1s both;
+  animation: fadeUp 1s ease 1.1s both;
 }
-
 .scroll-line {
   width: 1px; height: 50px;
   background: linear-gradient(to bottom, var(--orange), transparent);
   animation: scrollPulse 2s ease infinite;
 }
 
-/* ── CHAPTER SYSTEM ── */
-.chapter {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 80px);
+/* STATS */
+.stats-row {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+  background: var(--line); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+}
+.stat-cell { padding: 40px 30px; background: var(--night); text-align: center; }
+.stat-number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.8rem, 5vw, 4.5rem); line-height: 1; display: block;
+}
+.stat-number.orange { color: var(--orange); }
+.stat-number.teal { color: var(--teal); }
+.stat-number.gold { color: var(--gold); }
+.stat-desc {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem; color: var(--dim); line-height: 1.6; margin-top: 8px; display: block; letter-spacing: 0.04em;
 }
 
+/* CHAPTER */
+.chapter {
+  max-width: 1200px; margin: 0 auto;
+  padding: clamp(70px, 11vh, 130px) clamp(20px, 5vw, 80px);
+}
 .chapter-label {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase;
@@ -142,57 +138,41 @@ h1 em {
   display: flex; align-items: center; gap: 12px;
 }
 .chapter-label::after {
-  content: ''; flex: 1; max-width: 60px; height: 1px;
+  content: ''; flex: 1; max-width: 55px; height: 1px;
   background: var(--orange); opacity: 0.5;
 }
-
 h2 {
   font-family: 'DM Serif Display', Georgia, serif;
-  font-size: clamp(2rem, 4.5vw, 3.6rem);
-  line-height: 1.1;
-  color: var(--ink);
-  margin-bottom: 24px;
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  line-height: 1.08; color: var(--ink); margin-bottom: 20px;
 }
 h2 em { color: var(--orange); font-style: normal; }
 h2 .teal { color: var(--teal); }
-
 .body-text {
-  font-size: clamp(1rem, 1.5vw, 1.12rem);
-  line-height: 1.85;
-  color: rgba(240,230,208,0.72);
-  max-width: 680px;
+  font-size: clamp(1rem, 1.5vw, 1.08rem);
+  line-height: 1.85; color: rgba(240,230,208,0.68); max-width: 620px;
 }
-.body-text + .body-text { margin-top: 16px; }
 
-/* ── TWO-COL ── */
-.two-col {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
-  align-items: start;
-}
+/* TWO-COL */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
 .two-col.flip { grid-template-columns: 1.1fr 0.9fr; }
 
-/* ── PULL QUOTE ── */
+/* PULLQUOTE */
 .pullquote {
-  border-left: 3px solid var(--orange);
-  padding: 20px 24px;
-  margin: 32px 0;
-  background: rgba(240,98,42,0.05);
-  border-radius: 0 var(--r) var(--r) 0;
+  border-left: 3px solid var(--orange); padding: 20px 24px; margin: 28px 0;
+  background: rgba(240,98,42,0.05); border-radius: 0 var(--r) var(--r) 0;
 }
 .pullquote p {
   font-family: 'DM Serif Display', Georgia, serif;
-  font-size: clamp(1.4rem, 2.5vw, 2rem);
-  line-height: 1.3;
-  color: var(--ink);
-  font-style: italic;
+  font-size: clamp(1.35rem, 2.2vw, 1.9rem); line-height: 1.35;
+  color: var(--ink); font-style: italic;
 }
 
-/* ── VIZ CARDS ── */
+/* VIZ CARDS */
 .viz-wrap {
   background: rgba(10,18,32,0.7);
-  border: 1px solid rgba(240,230,208,0.1);
-  border-radius: 24px;
-  overflow: hidden;
+  border: 1px solid rgba(240,230,208,0.10);
+  border-radius: 24px; overflow: hidden;
   backdrop-filter: blur(20px);
   box-shadow: 0 30px 80px rgba(0,0,0,0.5);
   position: relative;
@@ -202,272 +182,139 @@ h2 .teal { color: var(--teal); }
   background: linear-gradient(135deg, rgba(42,184,200,0.04) 0%, transparent 50%, rgba(240,98,42,0.04) 100%);
   pointer-events: none; z-index: 1; border-radius: inherit;
 }
-
 .viz-caption {
-  padding: 16px 20px 20px;
-  border-top: 1px solid var(--line);
+  padding: 14px 20px 20px; border-top: 1px solid var(--line);
 }
-.viz-caption strong { color: var(--gold); font-size: 0.88rem; }
-.viz-caption p { color: var(--dim); font-size: 0.84rem; line-height: 1.6; margin-top: 6px; }
+.viz-caption strong { color: var(--gold); font-size: 0.85rem; }
+.viz-caption p { color: var(--dim); font-size: 0.82rem; line-height: 1.6; margin-top: 5px; }
 
-/* ── ANIMATED CLOCK ── */
-#clock-section {
-  background: linear-gradient(180deg, var(--night) 0%, #081020 50%, var(--night) 100%);
-  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
-}
+/* LINE CHART */
+.line-chart-wrap { padding: 20px; }
 
-.clock-container {
-  display: flex; flex-direction: column; align-items: center;
-  padding: clamp(60px,10vh,120px) clamp(20px,5vw,80px);
-  text-align: center;
-}
-
-.clock-wrap {
-  position: relative; width: clamp(260px, 40vw, 420px); height: clamp(260px, 40vw, 420px);
-  margin: 40px auto;
-}
-
-#crime-clock {
-  width: 100%; height: 100%;
-}
-
-.clock-time-display {
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
-.clock-hour {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(2.8rem, 6vw, 4.5rem);
-  color: var(--ink); line-height: 1;
-}
-.clock-label {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.7rem; letter-spacing: 0.15em;
-  color: var(--dim); text-transform: uppercase;
-}
-.clock-count {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.85rem; color: var(--orange);
-  margin-top: 4px;
-}
-
-.clock-controls {
-  display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; justify-content: center;
-}
-.clock-btn {
-  padding: 10px 22px;
-  border-radius: 999px;
-  border: 1px solid rgba(240,230,208,0.2);
-  background: rgba(240,230,208,0.05);
-  color: var(--dim);
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.8rem; letter-spacing: 0.1em;
-  cursor: pointer; transition: all 200ms ease;
-}
-.clock-btn:hover, .clock-btn.active {
-  background: var(--orange); border-color: var(--orange);
-  color: white; box-shadow: var(--glow-orange);
-}
-
-/* ── STATS ROW ── */
-.stats-row {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
-  background: var(--line);
-  margin: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
-}
-.stat-cell {
-  padding: 40px 30px;
-  background: var(--night);
-  text-align: center;
-}
-.stat-number {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  line-height: 1; display: block;
-}
-.stat-number.orange { color: var(--orange); }
-.stat-number.teal { color: var(--teal); }
-.stat-number.gold { color: var(--gold); }
-.stat-desc {
-  font-size: 0.88rem; color: var(--dim);
-  line-height: 1.5; margin-top: 8px; display: block;
-  font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.05em;
-}
-
-/* ── POLAR INTERACTIVE ── */
-.polar-controls {
-  padding: 20px 20px 10px;
-  display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 12px;
-}
-.polar-label {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.7rem; letter-spacing: 0.15em;
-  color: var(--dim); text-transform: uppercase;
-}
-.polar-select {
-  background: rgba(240,230,208,0.08);
-  border: 1px solid rgba(240,230,208,0.2);
-  border-radius: 10px;
-  color: var(--ink);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.95rem;
-  padding: 10px 14px;
-  cursor: pointer;
-  min-width: 200px;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23f0622a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 12px;
-  padding-right: 36px;
-}
-.polar-select option { background: var(--deep); }
-
-.category-pills {
-  display: flex; flex-wrap: wrap; gap: 8px;
-  padding: 0 20px 20px;
-}
-.category-pill {
-  padding: 6px 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(240,230,208,0.15);
-  background: transparent;
-  color: var(--dim);
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: all 150ms ease;
-  font-family: 'DM Sans', sans-serif;
-}
-.category-pill:hover { border-color: var(--orange); color: var(--orange); }
-.category-pill.active { background: var(--orange); border-color: var(--orange); color: white; }
-
-/* ── LINE CHART ── */
-.line-chart-wrap {
-  padding: 20px;
-}
-
-/* ── GRID HEATMAP ── */
+/* HEATMAP */
 .heatmap-wrap { padding: 24px 20px; overflow-x: auto; }
 .heatmap-grid {
-  display: grid;
-  grid-template-columns: 60px repeat(24, 1fr);
-  gap: 2px;
-  min-width: 600px;
+  display: grid; grid-template-columns: 60px repeat(24, 1fr);
+  gap: 2px; min-width: 600px;
 }
 .hm-cell {
-  aspect-ratio: 1;
-  border-radius: 4px;
-  cursor: default;
+  aspect-ratio: 1; border-radius: 4px;
   transition: transform 150ms ease, box-shadow 150ms ease;
   position: relative;
 }
-.hm-cell:hover {
-  transform: scale(1.4); z-index: 10;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-}
+.hm-cell:hover { transform: scale(1.4); z-index: 10; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
 .hm-header {
   display: flex; align-items: center; justify-content: center;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.6rem; color: var(--dim);
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; color: var(--dim);
 }
 .hm-row-label {
   display: flex; align-items: center;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.65rem; color: var(--dim);
-  padding-right: 6px;
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--dim); padding-right: 6px;
 }
 
-/* ── SCROLL SECTIONS ── */
+/* POLAR / CLOCK CANVAS */
+.clock-controls-row {
+  padding: 20px 24px 14px; display: flex; align-items: center;
+  justify-content: space-between; flex-wrap: wrap; gap: 14px;
+}
+.polar-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem; letter-spacing: 0.15em; color: var(--dim); text-transform: uppercase;
+}
+.clock-cat-select {
+  background: rgba(240,230,208,0.08); border: 1px solid rgba(240,230,208,0.2);
+  border-radius: 10px; color: var(--ink);
+  font-family: 'DM Sans', sans-serif; font-size: 0.95rem; padding: 10px 36px 10px 14px;
+  cursor: pointer; min-width: 210px; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23f0622a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center; background-size: 12px;
+}
+.clock-cat-select option { background: var(--deep); }
+.clock-toggle-btns { display: flex; gap: 8px; }
+.clock-toggle-btn {
+  padding: 8px 18px; border-radius: 999px;
+  border: 1px solid rgba(240,230,208,0.18); background: transparent;
+  color: var(--dim); font-size: 0.82rem; cursor: pointer;
+  transition: all 150ms ease; font-family: 'IBM Plex Mono', sans-serif; letter-spacing: 0.06em;
+}
+.clock-toggle-btn:hover { border-color: var(--orange); color: var(--orange); }
+.clock-toggle-btn.active-wd { background: var(--teal); border-color: var(--teal); color: #050a14; font-weight: 700; }
+.clock-toggle-btn.active-we { background: var(--orange); border-color: var(--orange); color: white; font-weight: 700; }
+.clock-toggle-btn.active-both { background: rgba(240,230,208,0.12); border-color: rgba(240,230,208,0.35); color: var(--ink); font-weight: 700; }
+.clock-canvas-wrap {
+  display: flex; gap: 0; align-items: stretch;
+  padding: 10px 20px 20px;
+}
+.crime-clock-canvas { flex: 1; min-height: 460px; cursor: crosshair; }
+.clock-sidebar {
+  width: 200px; padding: 16px 0 16px 20px;
+  display: flex; flex-direction: column; gap: 10px;
+  border-left: 1px solid var(--line); margin-left: 16px;
+}
+.clock-sidebar-title {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.64rem;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim); margin-bottom: 4px;
+}
+.clock-hover-info {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--ink);
+  line-height: 1.55;
+}
+.clock-peak-info {
+  margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line);
+}
+.clock-peak-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dim); margin-bottom: 6px; }
+.clock-peak-val { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; line-height: 1; }
+.clock-peak-val.wd { color: var(--teal); }
+.clock-peak-val.we { color: var(--orange); }
+
+/* PEAKS GRID */
+.peaks-section { background: linear-gradient(135deg, rgba(240,98,42,0.05) 0%, transparent 60%); }
+.peaks-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px;
+  margin-top: 36px;
+}
+.peak-card {
+  padding: 22px; border-radius: 16px;
+  background: rgba(10,18,32,0.65);
+  border: 1px solid rgba(240,230,208,0.08);
+  transition: transform 250ms ease, box-shadow 250ms ease;
+}
+.peak-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+.peak-icon { font-size: 1.7rem; margin-bottom: 10px; }
+.peak-cat { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; color: var(--dim); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 4px; }
+.peak-hour { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; line-height: 1; }
+.peak-meta { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--dim); margin: 4px 0 10px; }
+.peak-note { font-size: 0.82rem; color: rgba(240,230,208,0.55); line-height: 1.5; }
+
+/* REVEAL */
 .reveal {
   opacity: 0; transform: translateY(40px);
   transition: opacity 900ms ease, transform 900ms ease;
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
-/* ── DIVIDERS ── */
+/* DIVIDER */
 .divider {
   width: 100%; height: 1px;
   background: linear-gradient(90deg, transparent, var(--line) 30%, var(--line) 70%, transparent);
 }
 
-/* ── FULL BLEED SECTION ── */
-.full-bleed {
-  background: linear-gradient(135deg, rgba(240,98,42,0.06) 0%, transparent 50%);
-  padding: clamp(60px,10vh,120px) clamp(20px,5vw,80px);
-}
-
-/* ── FOOTER ── */
-footer {
-  border-top: 1px solid var(--line);
-  padding: 40px clamp(20px,5vw,80px);
-  max-width: 1200px;
-  margin: 0 auto;
-}
-.footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-.footer-title {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.7rem; letter-spacing: 0.2em;
-  text-transform: uppercase; color: var(--teal);
-  margin-bottom: 12px;
-}
-.footer-text { font-size: 0.9rem; line-height: 1.7; color: var(--dim); }
-.footer-text a { color: var(--teal); text-decoration: none; }
-.footer-text a:hover { text-decoration: underline; }
-
-/* ── TOOLTIP ── */
-.tooltip {
-  position: fixed;
-  background: rgba(8,16,32,0.95);
-  border: 1px solid var(--orange);
-  border-radius: 10px;
-  padding: 10px 14px;
-  pointer-events: none;
-  z-index: 500;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.78rem;
-  color: var(--ink);
-  opacity: 0;
-  transition: opacity 150ms ease;
-  max-width: 200px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
-}
-
-/* ── NIGHT TIMELINE ── */
-.timeline-strip {
-  display: flex;
-  height: 80px;
-  border-radius: 12px;
-  overflow: hidden;
-  margin: 32px 0;
+/* SUN CYCLE VISUAL */
+.sun-cycle {
+  display: flex; align-items: flex-end; gap: 0; height: 90px;
+  border-radius: 12px; overflow: hidden; margin: 30px 0;
   position: relative;
 }
-.timeline-hour {
-  flex: 1;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: flex-end;
-  padding-bottom: 6px;
-  cursor: pointer;
-  transition: opacity 200ms ease;
-  position: relative;
+.sun-hour {
+  flex: 1; transition: opacity 150ms; position: relative; cursor: default;
 }
-.timeline-hour:hover { opacity: 0.85; }
-.timeline-hour-label {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.55rem; color: rgba(240,230,208,0.5);
-  position: absolute; bottom: -18px;
-}
+.sun-hour-inner { width: 100%; height: 100%; }
 
-/* ── ANIMATED NUMBERS ── */
-.count-up { display: inline-block; }
-
-/* ── NIGHT/DAY TOGGLE ── */
+/* MODE INDICATOR */
 .mode-indicator {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 8px 16px; border-radius: 999px;
-  background: rgba(240,230,208,0.06);
-  border: 1px solid var(--line);
+  background: rgba(240,230,208,0.06); border: 1px solid var(--line);
   font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem;
   color: var(--dim); letter-spacing: 0.08em;
 }
@@ -475,41 +322,47 @@ footer {
 .mode-dot.night { background: var(--orange); box-shadow: 0 0 8px var(--orange); animation: pulse 2s ease infinite; }
 .mode-dot.day { background: var(--gold); }
 
-/* ── RESPONSIVE ── */
+/* FULL BLEED */
+.full-bleed { background: linear-gradient(135deg, rgba(240,98,42,0.05) 0%, transparent 60%); }
+
+/* TOOLTIP */
+.tooltip {
+  position: fixed; background: rgba(8,16,32,0.95);
+  border: 1px solid var(--orange); border-radius: 10px;
+  padding: 10px 14px; pointer-events: none; z-index: 500;
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem;
+  color: var(--ink); opacity: 0; transition: opacity 150ms ease;
+  max-width: 200px; box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+}
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 48px clamp(20px,5vw,80px);
+  max-width: 1200px; margin: 0 auto;
+}
+.footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.footer-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 12px;
+}
+.footer-text { font-size: 0.9rem; line-height: 1.7; color: var(--dim); }
+.footer-text a { color: var(--teal); text-decoration: none; }
+.footer-text a:hover { text-decoration: underline; }
+
+/* RESPONSIVE */
 @media (max-width: 800px) {
   .two-col, .two-col.flip { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
   .stats-row { grid-template-columns: 1fr; }
 }
-@media (max-width: 540px) {
-  h1 { font-size: 3.5rem; }
-}
+@media (max-width: 540px) { h1 { font-size: 3.8rem; } }
 
-/* ── KEYFRAMES ── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes scrollPulse {
-  0%, 100% { opacity: 1; transform: scaleY(1); }
-  50% { opacity: 0.3; transform: scaleY(0.6); }
-}
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 0 6px var(--orange); }
-  50% { box-shadow: 0 0 14px var(--orange); }
-}
-@keyframes starFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
-/* stars in hero */
-.star {
-  position: absolute;
-  border-radius: 50%;
-  background: white;
-  pointer-events: none;
-}
+/* KEYFRAMES */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes scrollPulse { 0%, 100% { opacity: 1; transform: scaleY(1); } 50% { opacity: 0.3; transform: scaleY(0.6); } }
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 6px var(--orange); } 50% { box-shadow: 0 0 16px var(--orange); } }
 </style>
 </head>
 <body>
@@ -519,17 +372,15 @@ footer {
 <div id="cursor-ring"></div>
 <div class="tooltip" id="tooltip"></div>
 
-<!-- ══════════════════════════════════════
-     HERO — 3D City Skyline
-════════════════════════════════════════ -->
+<!-- HERO -->
 <section id="hero">
   <canvas id="city-canvas"></canvas>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <p class="eyebrow">San Francisco · 2003–2025 · 1.2M incidents</p>
-    <h1>After<br><em>Dark</em></h1>
+    <h1>The City by the Clock<br><em>Every Hour, A Different City</em></h1>
     <p class="standfirst">
-      Every city has two faces. The one you see at noon — cafes, commuters, construction — and the one that emerges after midnight. In San Francisco, 22 years of crime data reveals a city that doesn't just get more dangerous at night. It <em style="color:var(--gold)">changes completely</em>.
+      What if crime isn't random? Across 22 years and 1.2 million San Francisco incidents, a pattern emerges — the city transforms completely depending on what hour it is, and whether it's a weekday or weekend. This is that story.
     </p>
   </div>
   <div class="hero-scroll-hint">
@@ -538,148 +389,85 @@ footer {
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     STATS ROW
-════════════════════════════════════════ -->
+<!-- STATS -->
 <div class="stats-row reveal">
   <div class="stat-cell">
-    <span class="stat-number orange" data-target="1200000" data-suffix="">1.2M</span>
+    <span class="stat-number orange">1.2M</span>
     <span class="stat-desc">incidents recorded<br>2003 – 2025</span>
   </div>
   <div class="stat-cell">
     <span class="stat-number teal">+23%</span>
-    <span class="stat-desc">more crime per hour<br>weekend midnight vs weekday</span>
+    <span class="stat-desc">more crime per hour<br>weekend midnight vs. weekday</span>
   </div>
   <div class="stat-cell">
     <span class="stat-number gold">7</span>
-    <span class="stat-desc">crime categories,<br>7 completely different clocks</span>
+    <span class="stat-desc">crime categories —<br>each with its own schedule</span>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     CHAPTER 1 — The Rhythm
-════════════════════════════════════════ -->
-<section class="chapter reveal">
-  <div class="two-col">
-    <div>
-      <p class="chapter-label">Chapter 01</p>
-      <h2>The city breathes.<br>Crime <em>breathes with it</em>.</h2>
-      <p class="body-text">
-        Most crime coverage treats safety like a static number — a temperature that rises and falls over months or years. But that misses the real story. San Francisco doesn't have a crime problem. It has <strong style="color:var(--ink)">several overlapping problems, each running on its own schedule.</strong>
-      </p>
-      <p class="body-text" style="margin-top:16px">
-        When you map 22 years of police incidents onto the clock, the city's daily choreography becomes visible. Morning brings its own rhythm. The evening commute another. And after midnight — especially on weekends — a different city appears entirely.
-      </p>
-      <div class="pullquote" style="margin-top:28px">
-        <p>"Midnight isn't just later.<br>It's <em>another city</em>."</p>
-      </div>
-    </div>
-    <div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <div class="divider"></div>
 
-<!-- ══════════════════════════════════════
-     CHAPTER 2 — THE CLOCK SECTION
-════════════════════════════════════════ -->
-<section id="clock-section" class="reveal">
-  <div class="clock-container">
-    <p class="chapter-label" style="justify-content:center">Chapter 02</p>
-    <h2 style="max-width:600px">The <span class="teal">crime clock</span> ticks<br>through the day</h2>
-    <p class="body-text" style="margin:0 auto;text-align:center;max-width:500px">
-      Watch the average number of incidents across a full 24-hour cycle. Choose a day type and see how the city's pulse changes.
-    </p>
-
-    <div class="clock-controls">
-      <button class="clock-btn active" id="btn-all">All Days</button>
-      <button class="clock-btn" id="btn-weekday">Weekday</button>
-      <button class="clock-btn" id="btn-weekend">Weekend</button>
-    </div>
-
-    <div class="clock-wrap">
-      <canvas id="crime-clock"></canvas>
-      <div class="clock-time-display">
-        <div class="clock-hour" id="clock-hour-display">12AM</div>
-        <div class="clock-label">Hour</div>
-        <div class="clock-count" id="clock-count-display">loading...</div>
-      </div>
-    </div>
-
-    <p style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--dim);text-align:center;margin-top:8px">
-      Hover over the clock to explore each hour
-    </p>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ══════════════════════════════════════
-     CHAPTER 3 — WEEKDAY vs WEEKEND LINE CHART
-════════════════════════════════════════ -->
+<!-- CHAPTER 1 — THE CROSSOVER -->
 <section class="chapter reveal">
-  <p class="chapter-label">Chapter 03</p>
-  <h2>One chart.<br><em>Two cities.</em></h2>
-  <div class="two-col" style="align-items:start;gap:60px;margin-top:32px">
+  <div class="two-col" style="align-items:start; gap:60px;">
     <div>
+      <p class="chapter-label">Act 01</p>
+      <h2>Day and night.<br><em>Two different cities.</em></h2>
       <p class="body-text">
-        Compare a typical weekday to a typical weekend day, and a story emerges in two acts. During the day, weekdays dominate — the city is at work, and so is crime. But watch what happens after 10PM.
-      </p>
-      <p class="body-text" style="margin-top:16px">
-        The weekend line <strong style="color:var(--orange)">surges past</strong> the weekday line and doesn't come back down until after 4AM. This isn't just a statistical quirk. It reflects the social geography of San Francisco: bars, clubs, nightlife — and the opportunities they create.
-      </p>
+        During the week, crime follows the city’s daily routine. But on weekends, things change—late nights get busier, and the city feels different after dark.
+        </p>
 
-      <div style="display:flex;flex-direction:column;gap:10px;margin-top:28px">
+      <div style="margin-top: 28px; display: flex; flex-direction: column; gap: 10px;">
         <div class="mode-indicator">
           <div class="mode-dot day"></div>
-          <span>Weekday peak: 6PM — evening commute</span>
+          <span>Weekday peak: 6PM — commute hour</span>
         </div>
         <div class="mode-indicator">
           <div class="mode-dot night"></div>
-          <span>Weekend peak: midnight — the crossover</span>
+          <span>Weekend peak: midnight — the takeover</span>
         </div>
+      </div>
+
+      <div class="pullquote" style="margin-top: 32px;">
+        <p>"After 10PM on a Friday,<br>the weekend <em>takes over.</em>"</p>
       </div>
     </div>
     <div class="viz-wrap">
-      <div id="line-chart" style="height:380px"></div>
-      <div class="viz-caption">
-        <strong>Figure 1 — Hourly crime rhythm, weekday vs weekend</strong>
-        <p>Average incidents per hour of day. The crossover point after 10PM is the key inflection in the entire dataset.</p>
-      </div>
+
+      <figure class="viz-wrap">
+        <div id="line-chart" style="height:390px; padding: 10px;"></div>
+        <figcaption class="viz-caption">
+          <strong>Fig: 1 — Weekday vs. Weekend — crimes by hour of day</strong>
+          <p>This line chart compares the average number of crime incidents per hour across all categories, with weekdays shown in teal and weekends in orange. The x-axis represents each hour of the day (0–23), and the y-axis shows the average number of incidents at that hour. The number shown while hovering represents the average number of incidents occurring at that specific hour (or day/hour) per day, based on the dataset. A higher number means more incidents happen at that time, indicating a peak or hotspot, while a lower number means fewer incidents, indicating a quieter or less risky period. This helps reveal how crime patterns shift between weekdays and weekends, especially after 10PM.</p>
+        </figcaption>
+      </figure>
     </div>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- ══════════════════════════════════════
-     CHAPTER 4 — HEATMAP
-════════════════════════════════════════ -->
-<section class="chapter reveal">
-  <div class="two-col flip" style="align-items:start;gap:60px">
-    <div class="viz-wrap" style="min-width:0">
+<!-- CHAPTER 2 — THE HINGE -->
+<section class="chapter reveal full-bleed">
+  <div class="two-col flip" style="align-items:start; gap:60px;">
+    <div class="viz-wrap" style="min-width:0;">
       <div class="heatmap-wrap">
-        <p class="polar-label" style="margin-bottom:16px">Day of week × Hour — average incidents</p>
+        <p class="polar-label" style="margin-bottom:16px;">Every hour of every day of the week</p>
         <div class="heatmap-grid" id="heatmap-grid"></div>
       </div>
       <div class="viz-caption">
-        <strong>Figure 2 — The weekly heat map</strong>
-        <p>Each cell = one day/hour combination. The Friday-Saturday night band burns hottest.</p>
+        <strong>Fig: 2 — The weekly heat map — day × hour intensity</strong>
+        <p>The x-axis is days (Monday to Sunday), and the y-axis is hours (0–23). Each cell’s color intensity (darker orange) indicates a higher average number of incidents at that specific day and hour.The number shown while hovering represents the average number of incidents occurring at that specific hour (or day/hour) per day, based on the dataset. A higher number means more incidents happen at that time, indicating a peak or hotspot, while a lower number means fewer incidents, indicating a quieter or less risky period. This highlights the late-week spike in crime.</p>
       </div>
     </div>
     <div>
-      <p class="chapter-label">Chapter 04</p>
-      <h2>The week has<br>a <em>hinge.</em></h2>
+      <p class="chapter-label">Act 02</p>
+      <h2>The week bends<br>on <em>Friday night.</em></h2>
       <p class="body-text">
-        It bends on Friday night and doesn't straighten out until Sunday morning. The heatmap reveals that the weekend surge isn't evenly distributed — it concentrates into one intense 36-hour window.
+        Most days look the same, but Friday night stands out. That’s when crime picks up and stays high until Saturday morning. It’s a special time in the city’s weekly rhythm.
       </p>
-      <p class="body-text" style="margin-top:16px">
-        Monday through Thursday? Nearly identical. Then Friday arrives, and the city's nighttime profile shifts dramatically. The darkest cells in this entire dataset form a diagonal band: Friday 10PM → Saturday 3AM.
-      </p>
-      <p class="body-text" style="margin-top:16px">
-        The implication is precise: it's not just "night" that matters. It's <strong style="color:var(--gold)">late-week night</strong>. That distinction changes everything about how you'd think about prevention, patrol, or policy.
+      <p class="body-text" style="margin-top: 16px;">
+        It's not just "nighttime." It's <strong style="color: var(--gold)">late-week nighttime</strong> — a specific combination of hour and day that concentrates risk into a narrow window.
       </p>
     </div>
   </div>
@@ -687,77 +475,83 @@ footer {
 
 <div class="divider"></div>
 
-<!-- ══════════════════════════════════════
-     CHAPTER 5 — POLAR INTERACTIVE
-════════════════════════════════════════ -->
+<!-- CHAPTER 3 — SEVEN CLOCKS (custom canvas) -->
 <section class="chapter reveal">
-  <p class="chapter-label">Chapter 05 — Interactive</p>
-  <h2>Seven crimes.<br><em>Seven clocks.</em></h2>
-  <p class="body-text" style="max-width:600px;margin-bottom:32px">
-    Here's the part that rewrites the whole story. Not every crime follows the same schedule. Switch between categories below and watch the polar chart reshape itself. The city doesn't become uniformly dangerous at night — <em style="color:var(--teal)">it becomes specifically dangerous in specific ways.</em>
+  <p class="chapter-label">Act 03 — Interactive</p>
+  <h2>Seven crimes.<br><em>Seven different clocks.</em></h2>
+  <p class="body-text" style="max-width: 600px; margin-bottom: 32px;">
+    Here's the twist: Every type of crime has its own favorite time. Some happen more in the day, others at night.Robbery peaks at 2AM on weekends when bars close. Drug offenses peak at 2PM on weekdays. Toggle between <span style="color:var(--teal)">Weekday</span>, <span style="color:var(--orange)">Weekend</span>, or <span style="color:var(--ink)">Both</span> — then hover any hour on the clock to see the exact count.
   </p>
 
   <div class="viz-wrap">
-    <div class="polar-controls">
-      <div>
-        <span class="polar-label">Select crime category</span>
+    <div class="clock-controls-row">
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <span class="polar-label">Crime category</span>
+        <select class="clock-cat-select" id="crime-clock-select"></select>
       </div>
-      <select class="polar-select" id="category-select"></select>
+      <div class="clock-toggle-btns">
+        <button class="clock-toggle-btn" id="btn-wd">Weekday</button>
+        <button class="clock-toggle-btn" id="btn-we">Weekend</button>
+        <button class="clock-toggle-btn active-both" id="btn-both">Both</button>
+      </div>
     </div>
-    <div class="category-pills" id="category-pills"></div>
-    <div id="polar-chart" style="height:500px"></div>
+    <div class="clock-canvas-wrap">
+      <canvas class="crime-clock-canvas" id="crime-clock-canvas"></canvas>
+      <div class="clock-sidebar">
+        <div class="clock-sidebar-title">Hover an hour</div>
+        <div class="clock-hover-info" id="clock-hover-info" style="color:var(--dim)">Move your cursor over any slice of the clock to see the average number of incidents at that hour.</div>
+        <div class="clock-peak-info">
+          <div class="clock-peak-label">Peak hour</div>
+          <div class="clock-peak-val wd" id="clock-peak-wd">—</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:0.62rem;color:var(--dim);margin-bottom:10px" id="clock-peak-wd-sub">weekday</div>
+          <div class="clock-peak-val we" id="clock-peak-we">—</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:0.62rem;color:var(--dim)" id="clock-peak-we-sub">weekend</div>
+        </div>
+      </div>
+    </div>
     <div class="viz-caption">
-      <strong>Figure 3 — 24-hour crime clock by category</strong>
-      <p>Blue = weekday average. Red = weekend average. Each ring represents one 24-hour cycle. The gap between rings reveals when weekends diverge from weekdays — and by how much.</p>
+      <strong>Fig: 3 — 24-hour crime clock by category — each slice is one hour of the day</strong>
+      <p>polar bar chart displays the hourly distribution of incidents for a selected crime category, with teal bars for weekdays and orange bars for weekends. The circular x-axis is the 24-hour clock, and the radial y-axis shows the average number of incidents per hour.The number shown while hovering represents the average number of incidents occurring at that specific hour (or day/hour) per day, based on the dataset. A higher number means more incidents happen at that time, indicating a peak or hotspot, while a lower number means fewer incidents, indicating a quieter or less risky period.This makes it easy to compare timing and intensity between weekdays and weekends.</p>
     </div>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- ══════════════════════════════════════
-     CHAPTER 6 — PEAK MOMENTS
-════════════════════════════════════════ -->
-<section class="chapter reveal full-bleed">
-  <p class="chapter-label">Chapter 06 — Peak moments</p>
-  <h2>When each crime<br><em>owns the night.</em></h2>
-  <p class="body-text" style="margin-bottom:36px;max-width:580px">
-    Distill everything into a single moment per category — the hour when that crime type peaks, and by how much.
+<!-- PEAKS SECTION -->
+<section class="chapter reveal peaks-section">
+  <p class="chapter-label">Peak Moments</p>
+  <h2>When each crime<br><em>owns different hour.</em></h2>
+  <p class="body-text" style="max-width: 560px;">
+    Distill 22 years into one moment per crime: the single hour when that category reaches its absolute peak, and whether it belongs to the week or the weekend.
   </p>
-  <div id="peaks-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px"></div>
+  <div class="peaks-grid" id="peaks-grid"></div>
+  <div class="viz-caption">
+    <strong>Fig: 4 — Peak Moments for Each Crime</strong>
+    <p>This grid summarizes the single hour when each crime category reaches its highest average number of incidents. Each card shows the crime type, the peak hour, whether it occurs on a weekday (teal) or weekend (orange), and a number like “0.42 avg/day.” This number represents the average number of incidents for that crime at its peak hour, per day, over the dataset. This distills complex patterns into clear insights about when each crime is most likely to occur.</p>
+  </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- ══════════════════════════════════════
-     OUTRO
-════════════════════════════════════════ -->
+<!-- OUTRO -->
 <section class="chapter reveal">
-  <div style="max-width:720px">
+  <div style="max-width: 700px;">
     <p class="chapter-label">Takeaway</p>
-    <h2>The city doesn't<br>just get dark.<br>It <em>transforms.</em></h2>
-    <p class="body-text" style="margin-top:8px">
-      Twenty-two years of data tells a story that a single headline never could. San Francisco's crime pattern isn't a wave that rises and falls — it's a living, shifting thing that responds to the day of the week, the hour, and the social geography of neighborhoods.
-    </p>
-    <p class="body-text" style="margin-top:16px">
-      The daytime city and the 2AM city share an address, but not much else. Different crimes. Different rhythms. Different stories.
-    </p>
-    <p class="body-text" style="margin-top:16px">
-      Which means any serious response to crime in San Francisco has to grapple with that complexity — not just ask "is it getting better?" but <strong style="color:var(--ink)">when, where, and which kind?</strong>
+    <h2>The city doesn't<br>just change at night.<br>It <em>transforms by the hour.</em></h2>
+    <p class="body-text" style="margin-top: 8px;">
+      After exploring 22 years of crime data, one thing is clear: San Francisco is not the same city at every hour. Crime doesn’t just rise and fall—it shifts, transforms, and follows its own hidden schedule. Each type of crime has its own “rush hour,” and the city’s risks change dramatically between weekday afternoons and the late hours of the weekend. What feels safe at noon might be unpredictable at 2AM.       </p>
+    <p class="body-text" style="margin-top: 16px;">
+      Understanding these rhythms helps us see the city not as a single story, but as a living pattern—one where time, day, and social life all shape what happens next. The 9AM city and the 2AM city share the same streets. But they're not the same place.
     </p>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     FOOTER
-════════════════════════════════════════ -->
 <footer class="reveal">
   <div class="footer-grid">
     <div>
       <p class="footer-title">Data & Methodology</p>
-      <p class="footer-text">
-        Incident data spans 2003–2025 from SFPD official records, standardized and cleaned. All averages are per-day means within each day-type (weekday or weekend). Crime categories are standardized across reporting periods.
-      </p>
+      <p class="footer-text">Incident data spans 2003–2025 from SFPD official records, standardized and cleaned. All averages are per-day means within each day-type (weekday or weekend). Crime categories are standardized across reporting periods.</p>
     </div>
     <div>
       <p class="footer-title">Further Reading</p>
@@ -770,20 +564,11 @@ footer {
   </div>
 </footer>
 
-<!-- ══════════════════════════════════════
-     DATA
-════════════════════════════════════════ -->
+<!-- DATA -->
 <script id="story-data" type="application/json">{
   "metadata": {
-    "title": "Crime isn't random. It follows a daily rhythm.",
     "focus_categories": [
-      "Vehicle Theft",
-      "Robbery",
-      "Drug Offense",
-      "Warrants",
-      "Weapon Offense",
-      "Missing Person",
-      "Non-Criminal"
+      "Vehicle Theft","Robbery","Drug Offense","Warrants","Weapon Offense","Missing Person","Non-Criminal"
     ],
     "chart_meta": {
       "midnight_weekend": 21.310416666666665,
@@ -793,358 +578,20 @@ footer {
     }
   },
   "category_hour": [
-    {"category":"Drug Offense","label":"Weekday","hour":0,"avg_per_day":0.5133},
-    {"category":"Drug Offense","label":"Weekday","hour":1,"avg_per_day":0.3085},
-    {"category":"Drug Offense","label":"Weekday","hour":2,"avg_per_day":0.2548},
-    {"category":"Drug Offense","label":"Weekday","hour":3,"avg_per_day":0.1823},
-    {"category":"Drug Offense","label":"Weekday","hour":4,"avg_per_day":0.117},
-    {"category":"Drug Offense","label":"Weekday","hour":5,"avg_per_day":0.0677},
-    {"category":"Drug Offense","label":"Weekday","hour":6,"avg_per_day":0.1342},
-    {"category":"Drug Offense","label":"Weekday","hour":7,"avg_per_day":0.2372},
-    {"category":"Drug Offense","label":"Weekday","hour":8,"avg_per_day":0.4127},
-    {"category":"Drug Offense","label":"Weekday","hour":9,"avg_per_day":0.6695},
-    {"category":"Drug Offense","label":"Weekday","hour":10,"avg_per_day":0.9217},
-    {"category":"Drug Offense","label":"Weekday","hour":11,"avg_per_day":1.1167},
-    {"category":"Drug Offense","label":"Weekday","hour":12,"avg_per_day":1.2762},
-    {"category":"Drug Offense","label":"Weekday","hour":13,"avg_per_day":1.3378},
-    {"category":"Drug Offense","label":"Weekday","hour":14,"avg_per_day":1.3998},
-    {"category":"Drug Offense","label":"Weekday","hour":15,"avg_per_day":1.3705},
-    {"category":"Drug Offense","label":"Weekday","hour":16,"avg_per_day":1.2997},
-    {"category":"Drug Offense","label":"Weekday","hour":17,"avg_per_day":1.1398},
-    {"category":"Drug Offense","label":"Weekday","hour":18,"avg_per_day":0.9688},
-    {"category":"Drug Offense","label":"Weekday","hour":19,"avg_per_day":0.8722},
-    {"category":"Drug Offense","label":"Weekday","hour":20,"avg_per_day":0.7957},
-    {"category":"Drug Offense","label":"Weekday","hour":21,"avg_per_day":0.7527},
-    {"category":"Drug Offense","label":"Weekday","hour":22,"avg_per_day":0.7068},
-    {"category":"Drug Offense","label":"Weekday","hour":23,"avg_per_day":0.5978},
-    {"category":"Drug Offense","label":"Weekend","hour":0,"avg_per_day":0.6008},
-    {"category":"Drug Offense","label":"Weekend","hour":1,"avg_per_day":0.4517},
-    {"category":"Drug Offense","label":"Weekend","hour":2,"avg_per_day":0.4167},
-    {"category":"Drug Offense","label":"Weekend","hour":3,"avg_per_day":0.3025},
-    {"category":"Drug Offense","label":"Weekend","hour":4,"avg_per_day":0.1983},
-    {"category":"Drug Offense","label":"Weekend","hour":5,"avg_per_day":0.1142},
-    {"category":"Drug Offense","label":"Weekend","hour":6,"avg_per_day":0.1117},
-    {"category":"Drug Offense","label":"Weekend","hour":7,"avg_per_day":0.1533},
-    {"category":"Drug Offense","label":"Weekend","hour":8,"avg_per_day":0.2425},
-    {"category":"Drug Offense","label":"Weekend","hour":9,"avg_per_day":0.3983},
-    {"category":"Drug Offense","label":"Weekend","hour":10,"avg_per_day":0.5492},
-    {"category":"Drug Offense","label":"Weekend","hour":11,"avg_per_day":0.6892},
-    {"category":"Drug Offense","label":"Weekend","hour":12,"avg_per_day":0.8017},
-    {"category":"Drug Offense","label":"Weekend","hour":13,"avg_per_day":0.8425},
-    {"category":"Drug Offense","label":"Weekend","hour":14,"avg_per_day":0.8658},
-    {"category":"Drug Offense","label":"Weekend","hour":15,"avg_per_day":0.8842},
-    {"category":"Drug Offense","label":"Weekend","hour":16,"avg_per_day":0.8567},
-    {"category":"Drug Offense","label":"Weekend","hour":17,"avg_per_day":0.9529},
-    {"category":"Drug Offense","label":"Weekend","hour":18,"avg_per_day":0.8917},
-    {"category":"Drug Offense","label":"Weekend","hour":19,"avg_per_day":0.8042},
-    {"category":"Drug Offense","label":"Weekend","hour":20,"avg_per_day":0.7483},
-    {"category":"Drug Offense","label":"Weekend","hour":21,"avg_per_day":0.7417},
-    {"category":"Drug Offense","label":"Weekend","hour":22,"avg_per_day":0.7375},
-    {"category":"Drug Offense","label":"Weekend","hour":23,"avg_per_day":0.6517},
-    {"category":"Missing Person","label":"Weekday","hour":0,"avg_per_day":0.1495},
-    {"category":"Missing Person","label":"Weekday","hour":1,"avg_per_day":0.1095},
-    {"category":"Missing Person","label":"Weekday","hour":2,"avg_per_day":0.0887},
-    {"category":"Missing Person","label":"Weekday","hour":3,"avg_per_day":0.0693},
-    {"category":"Missing Person","label":"Weekday","hour":4,"avg_per_day":0.052},
-    {"category":"Missing Person","label":"Weekday","hour":5,"avg_per_day":0.0413},
-    {"category":"Missing Person","label":"Weekday","hour":6,"avg_per_day":0.0493},
-    {"category":"Missing Person","label":"Weekday","hour":7,"avg_per_day":0.0713},
-    {"category":"Missing Person","label":"Weekday","hour":8,"avg_per_day":0.1422},
-    {"category":"Missing Person","label":"Weekday","hour":9,"avg_per_day":0.2422},
-    {"category":"Missing Person","label":"Weekday","hour":10,"avg_per_day":0.3555},
-    {"category":"Missing Person","label":"Weekday","hour":11,"avg_per_day":0.4673},
-    {"category":"Missing Person","label":"Weekday","hour":12,"avg_per_day":0.6652},
-    {"category":"Missing Person","label":"Weekday","hour":13,"avg_per_day":0.6035},
-    {"category":"Missing Person","label":"Weekday","hour":14,"avg_per_day":0.5647},
-    {"category":"Missing Person","label":"Weekday","hour":15,"avg_per_day":0.545},
-    {"category":"Missing Person","label":"Weekday","hour":16,"avg_per_day":0.5413},
-    {"category":"Missing Person","label":"Weekday","hour":17,"avg_per_day":0.521},
-    {"category":"Missing Person","label":"Weekday","hour":18,"avg_per_day":0.4493},
-    {"category":"Missing Person","label":"Weekday","hour":19,"avg_per_day":0.3992},
-    {"category":"Missing Person","label":"Weekday","hour":20,"avg_per_day":0.3437},
-    {"category":"Missing Person","label":"Weekday","hour":21,"avg_per_day":0.3003},
-    {"category":"Missing Person","label":"Weekday","hour":22,"avg_per_day":0.249},
-    {"category":"Missing Person","label":"Weekday","hour":23,"avg_per_day":0.2007},
-    {"category":"Missing Person","label":"Weekend","hour":0,"avg_per_day":0.1708},
-    {"category":"Missing Person","label":"Weekend","hour":1,"avg_per_day":0.1283},
-    {"category":"Missing Person","label":"Weekend","hour":2,"avg_per_day":0.1125},
-    {"category":"Missing Person","label":"Weekend","hour":3,"avg_per_day":0.0842},
-    {"category":"Missing Person","label":"Weekend","hour":4,"avg_per_day":0.0617},
-    {"category":"Missing Person","label":"Weekend","hour":5,"avg_per_day":0.0483},
-    {"category":"Missing Person","label":"Weekend","hour":6,"avg_per_day":0.0508},
-    {"category":"Missing Person","label":"Weekend","hour":7,"avg_per_day":0.0658},
-    {"category":"Missing Person","label":"Weekend","hour":8,"avg_per_day":0.1217},
-    {"category":"Missing Person","label":"Weekend","hour":9,"avg_per_day":0.2108},
-    {"category":"Missing Person","label":"Weekend","hour":10,"avg_per_day":0.3375},
-    {"category":"Missing Person","label":"Weekend","hour":11,"avg_per_day":0.4692},
-    {"category":"Missing Person","label":"Weekend","hour":12,"avg_per_day":0.6042},
-    {"category":"Missing Person","label":"Weekend","hour":13,"avg_per_day":0.5658},
-    {"category":"Missing Person","label":"Weekend","hour":14,"avg_per_day":0.5308},
-    {"category":"Missing Person","label":"Weekend","hour":15,"avg_per_day":0.5183},
-    {"category":"Missing Person","label":"Weekend","hour":16,"avg_per_day":0.5067},
-    {"category":"Missing Person","label":"Weekend","hour":17,"avg_per_day":0.4617},
-    {"category":"Missing Person","label":"Weekend","hour":18,"avg_per_day":0.4125},
-    {"category":"Missing Person","label":"Weekend","hour":19,"avg_per_day":0.3675},
-    {"category":"Missing Person","label":"Weekend","hour":20,"avg_per_day":0.3308},
-    {"category":"Missing Person","label":"Weekend","hour":21,"avg_per_day":0.2967},
-    {"category":"Missing Person","label":"Weekend","hour":22,"avg_per_day":0.2458},
-    {"category":"Missing Person","label":"Weekend","hour":23,"avg_per_day":0.2},
-    {"category":"Non-Criminal","label":"Weekday","hour":0,"avg_per_day":0.6985},
-    {"category":"Non-Criminal","label":"Weekday","hour":1,"avg_per_day":0.4608},
-    {"category":"Non-Criminal","label":"Weekday","hour":2,"avg_per_day":0.3568},
-    {"category":"Non-Criminal","label":"Weekday","hour":3,"avg_per_day":0.2658},
-    {"category":"Non-Criminal","label":"Weekday","hour":4,"avg_per_day":0.1898},
-    {"category":"Non-Criminal","label":"Weekday","hour":5,"avg_per_day":0.1613},
-    {"category":"Non-Criminal","label":"Weekday","hour":6,"avg_per_day":0.2702},
-    {"category":"Non-Criminal","label":"Weekday","hour":7,"avg_per_day":0.5403},
-    {"category":"Non-Criminal","label":"Weekday","hour":8,"avg_per_day":0.9718},
-    {"category":"Non-Criminal","label":"Weekday","hour":9,"avg_per_day":1.3475},
-    {"category":"Non-Criminal","label":"Weekday","hour":10,"avg_per_day":1.6412},
-    {"category":"Non-Criminal","label":"Weekday","hour":11,"avg_per_day":1.8698},
-    {"category":"Non-Criminal","label":"Weekday","hour":12,"avg_per_day":2.0385},
-    {"category":"Non-Criminal","label":"Weekday","hour":13,"avg_per_day":1.9418},
-    {"category":"Non-Criminal","label":"Weekday","hour":14,"avg_per_day":1.876},
-    {"category":"Non-Criminal","label":"Weekday","hour":15,"avg_per_day":1.8658},
-    {"category":"Non-Criminal","label":"Weekday","hour":16,"avg_per_day":1.8725},
-    {"category":"Non-Criminal","label":"Weekday","hour":17,"avg_per_day":1.8293},
-    {"category":"Non-Criminal","label":"Weekday","hour":18,"avg_per_day":1.6593},
-    {"category":"Non-Criminal","label":"Weekday","hour":19,"avg_per_day":1.4248},
-    {"category":"Non-Criminal","label":"Weekday","hour":20,"avg_per_day":1.2275},
-    {"category":"Non-Criminal","label":"Weekday","hour":21,"avg_per_day":1.0917},
-    {"category":"Non-Criminal","label":"Weekday","hour":22,"avg_per_day":0.9633},
-    {"category":"Non-Criminal","label":"Weekday","hour":23,"avg_per_day":0.8155},
-    {"category":"Non-Criminal","label":"Weekend","hour":0,"avg_per_day":0.9},
-    {"category":"Non-Criminal","label":"Weekend","hour":1,"avg_per_day":0.6617},
-    {"category":"Non-Criminal","label":"Weekend","hour":2,"avg_per_day":0.5692},
-    {"category":"Non-Criminal","label":"Weekend","hour":3,"avg_per_day":0.3942},
-    {"category":"Non-Criminal","label":"Weekend","hour":4,"avg_per_day":0.2633},
-    {"category":"Non-Criminal","label":"Weekend","hour":5,"avg_per_day":0.175},
-    {"category":"Non-Criminal","label":"Weekend","hour":6,"avg_per_day":0.2008},
-    {"category":"Non-Criminal","label":"Weekend","hour":7,"avg_per_day":0.3458},
-    {"category":"Non-Criminal","label":"Weekend","hour":8,"avg_per_day":0.6183},
-    {"category":"Non-Criminal","label":"Weekend","hour":9,"avg_per_day":0.9725},
-    {"category":"Non-Criminal","label":"Weekend","hour":10,"avg_per_day":1.2942},
-    {"category":"Non-Criminal","label":"Weekend","hour":11,"avg_per_day":1.5942},
-    {"category":"Non-Criminal","label":"Weekend","hour":12,"avg_per_day":1.8817},
-    {"category":"Non-Criminal","label":"Weekend","hour":13,"avg_per_day":1.7758},
-    {"category":"Non-Criminal","label":"Weekend","hour":14,"avg_per_day":1.7183},
-    {"category":"Non-Criminal","label":"Weekend","hour":15,"avg_per_day":1.7033},
-    {"category":"Non-Criminal","label":"Weekend","hour":16,"avg_per_day":1.7092},
-    {"category":"Non-Criminal","label":"Weekend","hour":17,"avg_per_day":1.6817},
-    {"category":"Non-Criminal","label":"Weekend","hour":18,"avg_per_day":1.5858},
-    {"category":"Non-Criminal","label":"Weekend","hour":19,"avg_per_day":1.4317},
-    {"category":"Non-Criminal","label":"Weekend","hour":20,"avg_per_day":1.2933},
-    {"category":"Non-Criminal","label":"Weekend","hour":21,"avg_per_day":1.1667},
-    {"category":"Non-Criminal","label":"Weekend","hour":22,"avg_per_day":1.0733},
-    {"category":"Non-Criminal","label":"Weekend","hour":23,"avg_per_day":0.9542},
-    {"category":"Robbery","label":"Weekday","hour":0,"avg_per_day":0.3513},
-    {"category":"Robbery","label":"Weekday","hour":1,"avg_per_day":0.2717},
-    {"category":"Robbery","label":"Weekday","hour":2,"avg_per_day":0.2293},
-    {"category":"Robbery","label":"Weekday","hour":3,"avg_per_day":0.1472},
-    {"category":"Robbery","label":"Weekday","hour":4,"avg_per_day":0.0917},
-    {"category":"Robbery","label":"Weekday","hour":5,"avg_per_day":0.0692},
-    {"category":"Robbery","label":"Weekday","hour":6,"avg_per_day":0.0865},
-    {"category":"Robbery","label":"Weekday","hour":7,"avg_per_day":0.113},
-    {"category":"Robbery","label":"Weekday","hour":8,"avg_per_day":0.1552},
-    {"category":"Robbery","label":"Weekday","hour":9,"avg_per_day":0.186},
-    {"category":"Robbery","label":"Weekday","hour":10,"avg_per_day":0.2297},
-    {"category":"Robbery","label":"Weekday","hour":11,"avg_per_day":0.2888},
-    {"category":"Robbery","label":"Weekday","hour":12,"avg_per_day":0.3358},
-    {"category":"Robbery","label":"Weekday","hour":13,"avg_per_day":0.3567},
-    {"category":"Robbery","label":"Weekday","hour":14,"avg_per_day":0.3875},
-    {"category":"Robbery","label":"Weekday","hour":15,"avg_per_day":0.4205},
-    {"category":"Robbery","label":"Weekday","hour":16,"avg_per_day":0.4748},
-    {"category":"Robbery","label":"Weekday","hour":17,"avg_per_day":0.5255},
-    {"category":"Robbery","label":"Weekday","hour":18,"avg_per_day":0.5488},
-    {"category":"Robbery","label":"Weekday","hour":19,"avg_per_day":0.5537},
-    {"category":"Robbery","label":"Weekday","hour":20,"avg_per_day":0.5612},
-    {"category":"Robbery","label":"Weekday","hour":21,"avg_per_day":0.6042},
-    {"category":"Robbery","label":"Weekday","hour":22,"avg_per_day":0.5622},
-    {"category":"Robbery","label":"Weekday","hour":23,"avg_per_day":0.4648},
-    {"category":"Robbery","label":"Weekend","hour":0,"avg_per_day":0.5392},
-    {"category":"Robbery","label":"Weekend","hour":1,"avg_per_day":0.6475},
-    {"category":"Robbery","label":"Weekend","hour":2,"avg_per_day":0.75},
-    {"category":"Robbery","label":"Weekend","hour":3,"avg_per_day":0.5358},
-    {"category":"Robbery","label":"Weekend","hour":4,"avg_per_day":0.3025},
-    {"category":"Robbery","label":"Weekend","hour":5,"avg_per_day":0.1733},
-    {"category":"Robbery","label":"Weekend","hour":6,"avg_per_day":0.1117},
-    {"category":"Robbery","label":"Weekend","hour":7,"avg_per_day":0.1033},
-    {"category":"Robbery","label":"Weekend","hour":8,"avg_per_day":0.1267},
-    {"category":"Robbery","label":"Weekend","hour":9,"avg_per_day":0.1733},
-    {"category":"Robbery","label":"Weekend","hour":10,"avg_per_day":0.2183},
-    {"category":"Robbery","label":"Weekend","hour":11,"avg_per_day":0.2575},
-    {"category":"Robbery","label":"Weekend","hour":12,"avg_per_day":0.3033},
-    {"category":"Robbery","label":"Weekend","hour":13,"avg_per_day":0.3308},
-    {"category":"Robbery","label":"Weekend","hour":14,"avg_per_day":0.365},
-    {"category":"Robbery","label":"Weekend","hour":15,"avg_per_day":0.3983},
-    {"category":"Robbery","label":"Weekend","hour":16,"avg_per_day":0.4308},
-    {"category":"Robbery","label":"Weekend","hour":17,"avg_per_day":0.4542},
-    {"category":"Robbery","label":"Weekend","hour":18,"avg_per_day":0.4508},
-    {"category":"Robbery","label":"Weekend","hour":19,"avg_per_day":0.4767},
-    {"category":"Robbery","label":"Weekend","hour":20,"avg_per_day":0.5267},
-    {"category":"Robbery","label":"Weekend","hour":21,"avg_per_day":0.5942},
-    {"category":"Robbery","label":"Weekend","hour":22,"avg_per_day":0.62},
-    {"category":"Robbery","label":"Weekend","hour":23,"avg_per_day":0.5817},
-    {"category":"Vehicle Theft","label":"Weekday","hour":0,"avg_per_day":0.9433},
-    {"category":"Vehicle Theft","label":"Weekday","hour":1,"avg_per_day":0.7383},
-    {"category":"Vehicle Theft","label":"Weekday","hour":2,"avg_per_day":0.6108},
-    {"category":"Vehicle Theft","label":"Weekday","hour":3,"avg_per_day":0.4545},
-    {"category":"Vehicle Theft","label":"Weekday","hour":4,"avg_per_day":0.3152},
-    {"category":"Vehicle Theft","label":"Weekday","hour":5,"avg_per_day":0.2608},
-    {"category":"Vehicle Theft","label":"Weekday","hour":6,"avg_per_day":0.3525},
-    {"category":"Vehicle Theft","label":"Weekday","hour":7,"avg_per_day":0.5453},
-    {"category":"Vehicle Theft","label":"Weekday","hour":8,"avg_per_day":0.7462},
-    {"category":"Vehicle Theft","label":"Weekday","hour":9,"avg_per_day":0.8775},
-    {"category":"Vehicle Theft","label":"Weekday","hour":10,"avg_per_day":1.0307},
-    {"category":"Vehicle Theft","label":"Weekday","hour":11,"avg_per_day":1.1578},
-    {"category":"Vehicle Theft","label":"Weekday","hour":12,"avg_per_day":1.2858},
-    {"category":"Vehicle Theft","label":"Weekday","hour":13,"avg_per_day":1.3713},
-    {"category":"Vehicle Theft","label":"Weekday","hour":14,"avg_per_day":1.485},
-    {"category":"Vehicle Theft","label":"Weekday","hour":15,"avg_per_day":1.5857},
-    {"category":"Vehicle Theft","label":"Weekday","hour":16,"avg_per_day":1.6833},
-    {"category":"Vehicle Theft","label":"Weekday","hour":17,"avg_per_day":1.7667},
-    {"category":"Vehicle Theft","label":"Weekday","hour":18,"avg_per_day":1.7892},
-    {"category":"Vehicle Theft","label":"Weekday","hour":19,"avg_per_day":1.7388},
-    {"category":"Vehicle Theft","label":"Weekday","hour":20,"avg_per_day":1.6388},
-    {"category":"Vehicle Theft","label":"Weekday","hour":21,"avg_per_day":1.4842},
-    {"category":"Vehicle Theft","label":"Weekday","hour":22,"avg_per_day":1.3022},
-    {"category":"Vehicle Theft","label":"Weekday","hour":23,"avg_per_day":1.1207},
-    {"category":"Vehicle Theft","label":"Weekend","hour":0,"avg_per_day":1.2183},
-    {"category":"Vehicle Theft","label":"Weekend","hour":1,"avg_per_day":1.1592},
-    {"category":"Vehicle Theft","label":"Weekend","hour":2,"avg_per_day":1.1183},
-    {"category":"Vehicle Theft","label":"Weekend","hour":3,"avg_per_day":0.9167},
-    {"category":"Vehicle Theft","label":"Weekend","hour":4,"avg_per_day":0.6658},
-    {"category":"Vehicle Theft","label":"Weekend","hour":5,"avg_per_day":0.5208},
-    {"category":"Vehicle Theft","label":"Weekend","hour":6,"avg_per_day":0.5192},
-    {"category":"Vehicle Theft","label":"Weekend","hour":7,"avg_per_day":0.5583},
-    {"category":"Vehicle Theft","label":"Weekend","hour":8,"avg_per_day":0.665},
-    {"category":"Vehicle Theft","label":"Weekend","hour":9,"avg_per_day":0.7683},
-    {"category":"Vehicle Theft","label":"Weekend","hour":10,"avg_per_day":0.9025},
-    {"category":"Vehicle Theft","label":"Weekend","hour":11,"avg_per_day":1.0258},
-    {"category":"Vehicle Theft","label":"Weekend","hour":12,"avg_per_day":1.1442},
-    {"category":"Vehicle Theft","label":"Weekend","hour":13,"avg_per_day":1.1925},
-    {"category":"Vehicle Theft","label":"Weekend","hour":14,"avg_per_day":1.2742},
-    {"category":"Vehicle Theft","label":"Weekend","hour":15,"avg_per_day":1.3383},
-    {"category":"Vehicle Theft","label":"Weekend","hour":16,"avg_per_day":1.4017},
-    {"category":"Vehicle Theft","label":"Weekend","hour":17,"avg_per_day":1.45},
-    {"category":"Vehicle Theft","label":"Weekend","hour":18,"avg_per_day":1.4992},
-    {"category":"Vehicle Theft","label":"Weekend","hour":19,"avg_per_day":1.5283},
-    {"category":"Vehicle Theft","label":"Weekend","hour":20,"avg_per_day":1.5683},
-    {"category":"Vehicle Theft","label":"Weekend","hour":21,"avg_per_day":1.5642},
-    {"category":"Vehicle Theft","label":"Weekend","hour":22,"avg_per_day":1.6162},
-    {"category":"Vehicle Theft","label":"Weekend","hour":23,"avg_per_day":1.4658},
-    {"category":"Warrants","label":"Weekday","hour":0,"avg_per_day":0.3103},
-    {"category":"Warrants","label":"Weekday","hour":1,"avg_per_day":0.2155},
-    {"category":"Warrants","label":"Weekday","hour":2,"avg_per_day":0.1807},
-    {"category":"Warrants","label":"Weekday","hour":3,"avg_per_day":0.1257},
-    {"category":"Warrants","label":"Weekday","hour":4,"avg_per_day":0.0838},
-    {"category":"Warrants","label":"Weekday","hour":5,"avg_per_day":0.0625},
-    {"category":"Warrants","label":"Weekday","hour":6,"avg_per_day":0.1068},
-    {"category":"Warrants","label":"Weekday","hour":7,"avg_per_day":0.1835},
-    {"category":"Warrants","label":"Weekday","hour":8,"avg_per_day":0.3118},
-    {"category":"Warrants","label":"Weekday","hour":9,"avg_per_day":0.4747},
-    {"category":"Warrants","label":"Weekday","hour":10,"avg_per_day":0.6083},
-    {"category":"Warrants","label":"Weekday","hour":11,"avg_per_day":0.7165},
-    {"category":"Warrants","label":"Weekday","hour":12,"avg_per_day":0.793},
-    {"category":"Warrants","label":"Weekday","hour":13,"avg_per_day":0.8208},
-    {"category":"Warrants","label":"Weekday","hour":14,"avg_per_day":0.8738},
-    {"category":"Warrants","label":"Weekday","hour":15,"avg_per_day":0.8905},
-    {"category":"Warrants","label":"Weekday","hour":16,"avg_per_day":0.9257},
-    {"category":"Warrants","label":"Weekday","hour":17,"avg_per_day":0.876},
-    {"category":"Warrants","label":"Weekday","hour":18,"avg_per_day":0.7618},
-    {"category":"Warrants","label":"Weekday","hour":19,"avg_per_day":0.6672},
-    {"category":"Warrants","label":"Weekday","hour":20,"avg_per_day":0.5985},
-    {"category":"Warrants","label":"Weekday","hour":21,"avg_per_day":0.5478},
-    {"category":"Warrants","label":"Weekday","hour":22,"avg_per_day":0.4975},
-    {"category":"Warrants","label":"Weekday","hour":23,"avg_per_day":0.3943},
-    {"category":"Warrants","label":"Weekend","hour":0,"avg_per_day":0.3133},
-    {"category":"Warrants","label":"Weekend","hour":1,"avg_per_day":0.2467},
-    {"category":"Warrants","label":"Weekend","hour":2,"avg_per_day":0.21},
-    {"category":"Warrants","label":"Weekend","hour":3,"avg_per_day":0.1533},
-    {"category":"Warrants","label":"Weekend","hour":4,"avg_per_day":0.1033},
-    {"category":"Warrants","label":"Weekend","hour":5,"avg_per_day":0.0733},
-    {"category":"Warrants","label":"Weekend","hour":6,"avg_per_day":0.0833},
-    {"category":"Warrants","label":"Weekend","hour":7,"avg_per_day":0.1183},
-    {"category":"Warrants","label":"Weekend","hour":8,"avg_per_day":0.2117},
-    {"category":"Warrants","label":"Weekend","hour":9,"avg_per_day":0.3358},
-    {"category":"Warrants","label":"Weekend","hour":10,"avg_per_day":0.46},
-    {"category":"Warrants","label":"Weekend","hour":11,"avg_per_day":0.5783},
-    {"category":"Warrants","label":"Weekend","hour":12,"avg_per_day":0.6508},
-    {"category":"Warrants","label":"Weekend","hour":13,"avg_per_day":0.6817},
-    {"category":"Warrants","label":"Weekend","hour":14,"avg_per_day":0.7167},
-    {"category":"Warrants","label":"Weekend","hour":15,"avg_per_day":0.7408},
-    {"category":"Warrants","label":"Weekend","hour":16,"avg_per_day":0.7583},
-    {"category":"Warrants","label":"Weekend","hour":17,"avg_per_day":0.7975},
-    {"category":"Warrants","label":"Weekend","hour":18,"avg_per_day":0.7558},
-    {"category":"Warrants","label":"Weekend","hour":19,"avg_per_day":0.6667},
-    {"category":"Warrants","label":"Weekend","hour":20,"avg_per_day":0.5983},
-    {"category":"Warrants","label":"Weekend","hour":21,"avg_per_day":0.545},
-    {"category":"Warrants","label":"Weekend","hour":22,"avg_per_day":0.4958},
-    {"category":"Warrants","label":"Weekend","hour":23,"avg_per_day":0.3975},
-    {"category":"Weapon Offense","label":"Weekday","hour":0,"avg_per_day":0.1355},
-    {"category":"Weapon Offense","label":"Weekday","hour":1,"avg_per_day":0.0973},
-    {"category":"Weapon Offense","label":"Weekday","hour":2,"avg_per_day":0.0833},
-    {"category":"Weapon Offense","label":"Weekday","hour":3,"avg_per_day":0.0593},
-    {"category":"Weapon Offense","label":"Weekday","hour":4,"avg_per_day":0.0398},
-    {"category":"Weapon Offense","label":"Weekday","hour":5,"avg_per_day":0.0302},
-    {"category":"Weapon Offense","label":"Weekday","hour":6,"avg_per_day":0.0407},
-    {"category":"Weapon Offense","label":"Weekday","hour":7,"avg_per_day":0.0535},
-    {"category":"Weapon Offense","label":"Weekday","hour":8,"avg_per_day":0.0705},
-    {"category":"Weapon Offense","label":"Weekday","hour":9,"avg_per_day":0.0855},
-    {"category":"Weapon Offense","label":"Weekday","hour":10,"avg_per_day":0.098},
-    {"category":"Weapon Offense","label":"Weekday","hour":11,"avg_per_day":0.1113},
-    {"category":"Weapon Offense","label":"Weekday","hour":12,"avg_per_day":0.1263},
-    {"category":"Weapon Offense","label":"Weekday","hour":13,"avg_per_day":0.1317},
-    {"category":"Weapon Offense","label":"Weekday","hour":14,"avg_per_day":0.1418},
-    {"category":"Weapon Offense","label":"Weekday","hour":15,"avg_per_day":0.1492},
-    {"category":"Weapon Offense","label":"Weekday","hour":16,"avg_per_day":0.1607},
-    {"category":"Weapon Offense","label":"Weekday","hour":17,"avg_per_day":0.1713},
-    {"category":"Weapon Offense","label":"Weekday","hour":18,"avg_per_day":0.1857},
-    {"category":"Weapon Offense","label":"Weekday","hour":19,"avg_per_day":0.1742},
-    {"category":"Weapon Offense","label":"Weekday","hour":20,"avg_per_day":0.1718},
-    {"category":"Weapon Offense","label":"Weekday","hour":21,"avg_per_day":0.1685},
-    {"category":"Weapon Offense","label":"Weekday","hour":22,"avg_per_day":0.1623},
-    {"category":"Weapon Offense","label":"Weekday","hour":23,"avg_per_day":0.1488},
-    {"category":"Weapon Offense","label":"Weekend","hour":0,"avg_per_day":0.2213},
-    {"category":"Weapon Offense","label":"Weekend","hour":1,"avg_per_day":0.1837},
-    {"category":"Weapon Offense","label":"Weekend","hour":2,"avg_per_day":0.1696},
-    {"category":"Weapon Offense","label":"Weekend","hour":3,"avg_per_day":0.12},
-    {"category":"Weapon Offense","label":"Weekend","hour":4,"avg_per_day":0.0683},
-    {"category":"Weapon Offense","label":"Weekend","hour":5,"avg_per_day":0.0308},
-    {"category":"Weapon Offense","label":"Weekend","hour":6,"avg_per_day":0.0371},
-    {"category":"Weapon Offense","label":"Weekend","hour":7,"avg_per_day":0.0488},
-    {"category":"Weapon Offense","label":"Weekend","hour":8,"avg_per_day":0.0708},
-    {"category":"Weapon Offense","label":"Weekend","hour":9,"avg_per_day":0.0862},
-    {"category":"Weapon Offense","label":"Weekend","hour":10,"avg_per_day":0.0842},
-    {"category":"Weapon Offense","label":"Weekend","hour":11,"avg_per_day":0.1108},
-    {"category":"Weapon Offense","label":"Weekend","hour":12,"avg_per_day":0.1125},
-    {"category":"Weapon Offense","label":"Weekend","hour":13,"avg_per_day":0.115},
-    {"category":"Weapon Offense","label":"Weekend","hour":14,"avg_per_day":0.1233},
-    {"category":"Weapon Offense","label":"Weekend","hour":15,"avg_per_day":0.1329},
-    {"category":"Weapon Offense","label":"Weekend","hour":16,"avg_per_day":0.1517},
-    {"category":"Weapon Offense","label":"Weekend","hour":17,"avg_per_day":0.1721},
-    {"category":"Weapon Offense","label":"Weekend","hour":18,"avg_per_day":0.1588},
-    {"category":"Weapon Offense","label":"Weekend","hour":19,"avg_per_day":0.1521},
-    {"category":"Weapon Offense","label":"Weekend","hour":20,"avg_per_day":0.1579},
-    {"category":"Weapon Offense","label":"Weekend","hour":21,"avg_per_day":0.1625},
-    {"category":"Weapon Offense","label":"Weekend","hour":22,"avg_per_day":0.1938},
-    {"category":"Weapon Offense","label":"Weekend","hour":23,"avg_per_day":0.1967}
-  ],
-  "peaks": [
-    {"category":"Drug Offense","label":"Weekday","hour":14,"avg_per_day":1.3998},
-    {"category":"Drug Offense","label":"Weekend","hour":17,"avg_per_day":0.9529},
-    {"category":"Missing Person","label":"Weekday","hour":12,"avg_per_day":0.6652},
-    {"category":"Missing Person","label":"Weekend","hour":12,"avg_per_day":0.6042},
-    {"category":"Non-Criminal","label":"Weekday","hour":12,"avg_per_day":2.0385},
-    {"category":"Non-Criminal","label":"Weekend","hour":12,"avg_per_day":1.8817},
-    {"category":"Robbery","label":"Weekend","hour":2,"avg_per_day":0.75},
-    {"category":"Robbery","label":"Weekday","hour":21,"avg_per_day":0.6042},
-    {"category":"Vehicle Theft","label":"Weekday","hour":18,"avg_per_day":1.7892},
-    {"category":"Vehicle Theft","label":"Weekend","hour":22,"avg_per_day":1.6162},
-    {"category":"Warrants","label":"Weekday","hour":16,"avg_per_day":0.9257},
-    {"category":"Warrants","label":"Weekend","hour":17,"avg_per_day":0.7975},
-    {"category":"Weapon Offense","label":"Weekend","hour":0,"avg_per_day":0.2213},
-    {"category":"Weapon Offense","label":"Weekday","hour":18,"avg_per_day":0.1857}
+    {"category":"Drug Offense","label":"Weekday","hour":0,"avg_per_day":0.5133},{"category":"Drug Offense","label":"Weekday","hour":1,"avg_per_day":0.3085},{"category":"Drug Offense","label":"Weekday","hour":2,"avg_per_day":0.2548},{"category":"Drug Offense","label":"Weekday","hour":3,"avg_per_day":0.1823},{"category":"Drug Offense","label":"Weekday","hour":4,"avg_per_day":0.117},{"category":"Drug Offense","label":"Weekday","hour":5,"avg_per_day":0.0677},{"category":"Drug Offense","label":"Weekday","hour":6,"avg_per_day":0.1342},{"category":"Drug Offense","label":"Weekday","hour":7,"avg_per_day":0.2372},{"category":"Drug Offense","label":"Weekday","hour":8,"avg_per_day":0.4127},{"category":"Drug Offense","label":"Weekday","hour":9,"avg_per_day":0.6695},{"category":"Drug Offense","label":"Weekday","hour":10,"avg_per_day":0.9217},{"category":"Drug Offense","label":"Weekday","hour":11,"avg_per_day":1.1167},{"category":"Drug Offense","label":"Weekday","hour":12,"avg_per_day":1.2762},{"category":"Drug Offense","label":"Weekday","hour":13,"avg_per_day":1.3378},{"category":"Drug Offense","label":"Weekday","hour":14,"avg_per_day":1.3998},{"category":"Drug Offense","label":"Weekday","hour":15,"avg_per_day":1.3705},{"category":"Drug Offense","label":"Weekday","hour":16,"avg_per_day":1.2997},{"category":"Drug Offense","label":"Weekday","hour":17,"avg_per_day":1.1398},{"category":"Drug Offense","label":"Weekday","hour":18,"avg_per_day":0.9688},{"category":"Drug Offense","label":"Weekday","hour":19,"avg_per_day":0.8722},{"category":"Drug Offense","label":"Weekday","hour":20,"avg_per_day":0.7957},{"category":"Drug Offense","label":"Weekday","hour":21,"avg_per_day":0.7527},{"category":"Drug Offense","label":"Weekday","hour":22,"avg_per_day":0.7068},{"category":"Drug Offense","label":"Weekday","hour":23,"avg_per_day":0.5978},
+    {"category":"Drug Offense","label":"Weekend","hour":0,"avg_per_day":0.6008},{"category":"Drug Offense","label":"Weekend","hour":1,"avg_per_day":0.4517},{"category":"Drug Offense","label":"Weekend","hour":2,"avg_per_day":0.4167},{"category":"Drug Offense","label":"Weekend","hour":3,"avg_per_day":0.3025},{"category":"Drug Offense","label":"Weekend","hour":4,"avg_per_day":0.1983},{"category":"Drug Offense","label":"Weekend","hour":5,"avg_per_day":0.1142},{"category":"Drug Offense","label":"Weekend","hour":6,"avg_per_day":0.1117},{"category":"Drug Offense","label":"Weekend","hour":7,"avg_per_day":0.1533},{"category":"Drug Offense","label":"Weekend","hour":8,"avg_per_day":0.2425},{"category":"Drug Offense","label":"Weekend","hour":9,"avg_per_day":0.3983},{"category":"Drug Offense","label":"Weekend","hour":10,"avg_per_day":0.5492},{"category":"Drug Offense","label":"Weekend","hour":11,"avg_per_day":0.6892},{"category":"Drug Offense","label":"Weekend","hour":12,"avg_per_day":0.8017},{"category":"Drug Offense","label":"Weekend","hour":13,"avg_per_day":0.8425},{"category":"Drug Offense","label":"Weekend","hour":14,"avg_per_day":0.8658},{"category":"Drug Offense","label":"Weekend","hour":15,"avg_per_day":0.8842},{"category":"Drug Offense","label":"Weekend","hour":16,"avg_per_day":0.8567},{"category":"Drug Offense","label":"Weekend","hour":17,"avg_per_day":0.9529},{"category":"Drug Offense","label":"Weekend","hour":18,"avg_per_day":0.8917},{"category":"Drug Offense","label":"Weekend","hour":19,"avg_per_day":0.8042},{"category":"Drug Offense","label":"Weekend","hour":20,"avg_per_day":0.7483},{"category":"Drug Offense","label":"Weekend","hour":21,"avg_per_day":0.7417},{"category":"Drug Offense","label":"Weekend","hour":22,"avg_per_day":0.7375},{"category":"Drug Offense","label":"Weekend","hour":23,"avg_per_day":0.6517},
+    {"category":"Missing Person","label":"Weekday","hour":0,"avg_per_day":0.1495},{"category":"Missing Person","label":"Weekday","hour":1,"avg_per_day":0.1095},{"category":"Missing Person","label":"Weekday","hour":2,"avg_per_day":0.0887},{"category":"Missing Person","label":"Weekday","hour":3,"avg_per_day":0.0693},{"category":"Missing Person","label":"Weekday","hour":4,"avg_per_day":0.052},{"category":"Missing Person","label":"Weekday","hour":5,"avg_per_day":0.0413},{"category":"Missing Person","label":"Weekday","hour":6,"avg_per_day":0.0493},{"category":"Missing Person","label":"Weekday","hour":7,"avg_per_day":0.0713},{"category":"Missing Person","label":"Weekday","hour":8,"avg_per_day":0.1422},{"category":"Missing Person","label":"Weekday","hour":9,"avg_per_day":0.2422},{"category":"Missing Person","label":"Weekday","hour":10,"avg_per_day":0.3555},{"category":"Missing Person","label":"Weekday","hour":11,"avg_per_day":0.4673},{"category":"Missing Person","label":"Weekday","hour":12,"avg_per_day":0.6652},{"category":"Missing Person","label":"Weekday","hour":13,"avg_per_day":0.6035},{"category":"Missing Person","label":"Weekday","hour":14,"avg_per_day":0.5647},{"category":"Missing Person","label":"Weekday","hour":15,"avg_per_day":0.545},{"category":"Missing Person","label":"Weekday","hour":16,"avg_per_day":0.5413},{"category":"Missing Person","label":"Weekday","hour":17,"avg_per_day":0.521},{"category":"Missing Person","label":"Weekday","hour":18,"avg_per_day":0.4493},{"category":"Missing Person","label":"Weekday","hour":19,"avg_per_day":0.3992},{"category":"Missing Person","label":"Weekday","hour":20,"avg_per_day":0.3437},{"category":"Missing Person","label":"Weekday","hour":21,"avg_per_day":0.3003},{"category":"Missing Person","label":"Weekday","hour":22,"avg_per_day":0.249},{"category":"Missing Person","label":"Weekday","hour":23,"avg_per_day":0.2007},
+    {"category":"Missing Person","label":"Weekend","hour":0,"avg_per_day":0.1708},{"category":"Missing Person","label":"Weekend","hour":1,"avg_per_day":0.1283},{"category":"Missing Person","label":"Weekend","hour":2,"avg_per_day":0.1125},{"category":"Missing Person","label":"Weekend","hour":3,"avg_per_day":0.0842},{"category":"Missing Person","label":"Weekend","hour":4,"avg_per_day":0.0617},{"category":"Missing Person","label":"Weekend","hour":5,"avg_per_day":0.0483},{"category":"Missing Person","label":"Weekend","hour":6,"avg_per_day":0.0508},{"category":"Missing Person","label":"Weekend","hour":7,"avg_per_day":0.0658},{"category":"Missing Person","label":"Weekend","hour":8,"avg_per_day":0.1217},{"category":"Missing Person","label":"Weekend","hour":9,"avg_per_day":0.2108},{"category":"Missing Person","label":"Weekend","hour":10,"avg_per_day":0.3375},{"category":"Missing Person","label":"Weekend","hour":11,"avg_per_day":0.4692},{"category":"Missing Person","label":"Weekend","hour":12,"avg_per_day":0.6042},{"category":"Missing Person","label":"Weekend","hour":13,"avg_per_day":0.5658},{"category":"Missing Person","label":"Weekend","hour":14,"avg_per_day":0.5308},{"category":"Missing Person","label":"Weekend","hour":15,"avg_per_day":0.5183},{"category":"Missing Person","label":"Weekend","hour":16,"avg_per_day":0.5067},{"category":"Missing Person","label":"Weekend","hour":17,"avg_per_day":0.4617},{"category":"Missing Person","label":"Weekend","hour":18,"avg_per_day":0.4125},{"category":"Missing Person","label":"Weekend","hour":19,"avg_per_day":0.3675},{"category":"Missing Person","label":"Weekend","hour":20,"avg_per_day":0.3308},{"category":"Missing Person","label":"Weekend","hour":21,"avg_per_day":0.2967},{"category":"Missing Person","label":"Weekend","hour":22,"avg_per_day":0.2458},{"category":"Missing Person","label":"Weekend","hour":23,"avg_per_day":0.2},
+    {"category":"Non-Criminal","label":"Weekday","hour":0,"avg_per_day":0.6985},{"category":"Non-Criminal","label":"Weekday","hour":1,"avg_per_day":0.4608},{"category":"Non-Criminal","label":"Weekday","hour":2,"avg_per_day":0.3568},{"category":"Non-Criminal","label":"Weekday","hour":3,"avg_per_day":0.2658},{"category":"Non-Criminal","label":"Weekday","hour":4,"avg_per_day":0.1898},{"category":"Non-Criminal","label":"Weekday","hour":5,"avg_per_day":0.1613},{"category":"Non-Criminal","label":"Weekday","hour":6,"avg_per_day":0.2702},{"category":"Non-Criminal","label":"Weekday","hour":7,"avg_per_day":0.5403},{"category":"Non-Criminal","label":"Weekday","hour":8,"avg_per_day":0.9718},{"category":"Non-Criminal","label":"Weekday","hour":9,"avg_per_day":1.3475},{"category":"Non-Criminal","label":"Weekday","hour":10,"avg_per_day":1.6412},{"category":"Non-Criminal","label":"Weekday","hour":11,"avg_per_day":1.8698},{"category":"Non-Criminal","label":"Weekday","hour":12,"avg_per_day":2.0385},{"category":"Non-Criminal","label":"Weekday","hour":13,"avg_per_day":1.9418},{"category":"Non-Criminal","label":"Weekday","hour":14,"avg_per_day":1.876},{"category":"Non-Criminal","label":"Weekday","hour":15,"avg_per_day":1.8658},{"category":"Non-Criminal","label":"Weekday","hour":16,"avg_per_day":1.8725},{"category":"Non-Criminal","label":"Weekday","hour":17,"avg_per_day":1.8293},{"category":"Non-Criminal","label":"Weekday","hour":18,"avg_per_day":1.6593},{"category":"Non-Criminal","label":"Weekday","hour":19,"avg_per_day":1.4248},{"category":"Non-Criminal","label":"Weekday","hour":20,"avg_per_day":1.2275},{"category":"Non-Criminal","label":"Weekday","hour":21,"avg_per_day":1.0917},{"category":"Non-Criminal","label":"Weekday","hour":22,"avg_per_day":0.9633},{"category":"Non-Criminal","label":"Weekday","hour":23,"avg_per_day":0.8155},
+    {"category":"Non-Criminal","label":"Weekend","hour":0,"avg_per_day":0.9},{"category":"Non-Criminal","label":"Weekend","hour":1,"avg_per_day":0.6617},{"category":"Non-Criminal","label":"Weekend","hour":2,"avg_per_day":0.5692},{"category":"Non-Criminal","label":"Weekend","hour":3,"avg_per_day":0.3942},{"category":"Non-Criminal","label":"Weekend","hour":4,"avg_per_day":0.2633},{"category":"Non-Criminal","label":"Weekend","hour":5,"avg_per_day":0.175},{"category":"Non-Criminal","label":"Weekend","hour":6,"avg_per_day":0.2008},{"category":"Non-Criminal","label":"Weekend","hour":7,"avg_per_day":0.3458},{"category":"Non-Criminal","label":"Weekend","hour":8,"avg_per_day":0.6183},{"category":"Non-Criminal","label":"Weekend","hour":9,"avg_per_day":0.9725},{"category":"Non-Criminal","label":"Weekend","hour":10,"avg_per_day":1.2942},{"category":"Non-Criminal","label":"Weekend","hour":11,"avg_per_day":1.5942},{"category":"Non-Criminal","label":"Weekend","hour":12,"avg_per_day":1.8817},{"category":"Non-Criminal","label":"Weekend","hour":13,"avg_per_day":1.7758},{"category":"Non-Criminal","label":"Weekend","hour":14,"avg_per_day":1.7183},{"category":"Non-Criminal","label":"Weekend","hour":15,"avg_per_day":1.7033},{"category":"Non-Criminal","label":"Weekend","hour":16,"avg_per_day":1.7092},{"category":"Non-Criminal","label":"Weekend","hour":17,"avg_per_day":1.6817},{"category":"Non-Criminal","label":"Weekend","hour":18,"avg_per_day":1.5858},{"category":"Non-Criminal","label":"Weekend","hour":19,"avg_per_day":1.4317},{"category":"Non-Criminal","label":"Weekend","hour":20,"avg_per_day":1.2933},{"category":"Non-Criminal","label":"Weekend","hour":21,"avg_per_day":1.1667},{"category":"Non-Criminal","label":"Weekend","hour":22,"avg_per_day":1.0733},{"category":"Non-Criminal","label":"Weekend","hour":23,"avg_per_day":0.9542},
+    {"category":"Robbery","label":"Weekday","hour":0,"avg_per_day":0.3513},{"category":"Robbery","label":"Weekday","hour":1,"avg_per_day":0.2717},{"category":"Robbery","label":"Weekday","hour":2,"avg_per_day":0.2293},{"category":"Robbery","label":"Weekday","hour":3,"avg_per_day":0.1472},{"category":"Robbery","label":"Weekday","hour":4,"avg_per_day":0.0917},{"category":"Robbery","label":"Weekday","hour":5,"avg_per_day":0.0692},{"category":"Robbery","label":"Weekday","hour":6,"avg_per_day":0.0865},{"category":"Robbery","label":"Weekday","hour":7,"avg_per_day":0.113},{"category":"Robbery","label":"Weekday","hour":8,"avg_per_day":0.1552},{"category":"Robbery","label":"Weekday","hour":9,"avg_per_day":0.186},{"category":"Robbery","label":"Weekday","hour":10,"avg_per_day":0.2297},{"category":"Robbery","label":"Weekday","hour":11,"avg_per_day":0.2888},{"category":"Robbery","label":"Weekday","hour":12,"avg_per_day":0.3358},{"category":"Robbery","label":"Weekday","hour":13,"avg_per_day":0.3567},{"category":"Robbery","label":"Weekday","hour":14,"avg_per_day":0.3875},{"category":"Robbery","label":"Weekday","hour":15,"avg_per_day":0.4205},{"category":"Robbery","label":"Weekday","hour":16,"avg_per_day":0.4748},{"category":"Robbery","label":"Weekday","hour":17,"avg_per_day":0.5255},{"category":"Robbery","label":"Weekday","hour":18,"avg_per_day":0.5488},{"category":"Robbery","label":"Weekday","hour":19,"avg_per_day":0.5537},{"category":"Robbery","label":"Weekday","hour":20,"avg_per_day":0.5612},{"category":"Robbery","label":"Weekday","hour":21,"avg_per_day":0.6042},{"category":"Robbery","label":"Weekday","hour":22,"avg_per_day":0.5622},{"category":"Robbery","label":"Weekday","hour":23,"avg_per_day":0.4648},
+    {"category":"Robbery","label":"Weekend","hour":0,"avg_per_day":0.5392},{"category":"Robbery","label":"Weekend","hour":1,"avg_per_day":0.6475},{"category":"Robbery","label":"Weekend","hour":2,"avg_per_day":0.75},{"category":"Robbery","label":"Weekend","hour":3,"avg_per_day":0.5358},{"category":"Robbery","label":"Weekend","hour":4,"avg_per_day":0.3025},{"category":"Robbery","label":"Weekend","hour":5,"avg_per_day":0.1733},{"category":"Robbery","label":"Weekend","hour":6,"avg_per_day":0.1117},{"category":"Robbery","label":"Weekend","hour":7,"avg_per_day":0.1033},{"category":"Robbery","label":"Weekend","hour":8,"avg_per_day":0.1267},{"category":"Robbery","label":"Weekend","hour":9,"avg_per_day":0.1733},{"category":"Robbery","label":"Weekend","hour":10,"avg_per_day":0.2183},{"category":"Robbery","label":"Weekend","hour":11,"avg_per_day":0.2575},{"category":"Robbery","label":"Weekend","hour":12,"avg_per_day":0.3033},{"category":"Robbery","label":"Weekend","hour":13,"avg_per_day":0.3308},{"category":"Robbery","label":"Weekend","hour":14,"avg_per_day":0.365},{"category":"Robbery","label":"Weekend","hour":15,"avg_per_day":0.3983},{"category":"Robbery","label":"Weekend","hour":16,"avg_per_day":0.4308},{"category":"Robbery","label":"Weekend","hour":17,"avg_per_day":0.4542},{"category":"Robbery","label":"Weekend","hour":18,"avg_per_day":0.4508},{"category":"Robbery","label":"Weekend","hour":19,"avg_per_day":0.4767},{"category":"Robbery","label":"Weekend","hour":20,"avg_per_day":0.5267},{"category":"Robbery","label":"Weekend","hour":21,"avg_per_day":0.5942},{"category":"Robbery","label":"Weekend","hour":22,"avg_per_day":0.62},{"category":"Robbery","label":"Weekend","hour":23,"avg_per_day":0.5817},
+    {"category":"Vehicle Theft","label":"Weekday","hour":0,"avg_per_day":0.9433},{"category":"Vehicle Theft","label":"Weekday","hour":1,"avg_per_day":0.7383},{"category":"Vehicle Theft","label":"Weekday","hour":2,"avg_per_day":0.6108},{"category":"Vehicle Theft","label":"Weekday","hour":3,"avg_per_day":0.4545},{"category":"Vehicle Theft","label":"Weekday","hour":4,"avg_per_day":0.3152},{"category":"Vehicle Theft","label":"Weekday","hour":5,"avg_per_day":0.2608},{"category":"Vehicle Theft","label":"Weekday","hour":6,"avg_per_day":0.3525},{"category":"Vehicle Theft","label":"Weekday","hour":7,"avg_per_day":0.5453},{"category":"Vehicle Theft","label":"Weekday","hour":8,"avg_per_day":0.7462},{"category":"Vehicle Theft","label":"Weekday","hour":9,"avg_per_day":0.8775},{"category":"Vehicle Theft","label":"Weekday","hour":10,"avg_per_day":1.0307},{"category":"Vehicle Theft","label":"Weekday","hour":11,"avg_per_day":1.1578},{"category":"Vehicle Theft","label":"Weekday","hour":12,"avg_per_day":1.2858},{"category":"Vehicle Theft","label":"Weekday","hour":13,"avg_per_day":1.3713},{"category":"Vehicle Theft","label":"Weekday","hour":14,"avg_per_day":1.485},{"category":"Vehicle Theft","label":"Weekday","hour":15,"avg_per_day":1.5857},{"category":"Vehicle Theft","label":"Weekday","hour":16,"avg_per_day":1.6833},{"category":"Vehicle Theft","label":"Weekday","hour":17,"avg_per_day":1.7667},{"category":"Vehicle Theft","label":"Weekday","hour":18,"avg_per_day":1.7892},{"category":"Vehicle Theft","label":"Weekday","hour":19,"avg_per_day":1.7388},{"category":"Vehicle Theft","label":"Weekday","hour":20,"avg_per_day":1.6388},{"category":"Vehicle Theft","label":"Weekday","hour":21,"avg_per_day":1.4842},{"category":"Vehicle Theft","label":"Weekday","hour":22,"avg_per_day":1.3022},{"category":"Vehicle Theft","label":"Weekday","hour":23,"avg_per_day":1.1207},
+    {"category":"Vehicle Theft","label":"Weekend","hour":0,"avg_per_day":1.2183},{"category":"Vehicle Theft","label":"Weekend","hour":1,"avg_per_day":1.1592},{"category":"Vehicle Theft","label":"Weekend","hour":2,"avg_per_day":1.1183},{"category":"Vehicle Theft","label":"Weekend","hour":3,"avg_per_day":0.9167},{"category":"Vehicle Theft","label":"Weekend","hour":4,"avg_per_day":0.6658},{"category":"Vehicle Theft","label":"Weekend","hour":5,"avg_per_day":0.5208},{"category":"Vehicle Theft","label":"Weekend","hour":6,"avg_per_day":0.5192},{"category":"Vehicle Theft","label":"Weekend","hour":7,"avg_per_day":0.5583},{"category":"Vehicle Theft","label":"Weekend","hour":8,"avg_per_day":0.665},{"category":"Vehicle Theft","label":"Weekend","hour":9,"avg_per_day":0.7683},{"category":"Vehicle Theft","label":"Weekend","hour":10,"avg_per_day":0.9025},{"category":"Vehicle Theft","label":"Weekend","hour":11,"avg_per_day":1.0258},{"category":"Vehicle Theft","label":"Weekend","hour":12,"avg_per_day":1.1442},{"category":"Vehicle Theft","label":"Weekend","hour":13,"avg_per_day":1.1925},{"category":"Vehicle Theft","label":"Weekend","hour":14,"avg_per_day":1.2742},{"category":"Vehicle Theft","label":"Weekend","hour":15,"avg_per_day":1.3383},{"category":"Vehicle Theft","label":"Weekend","hour":16,"avg_per_day":1.4017},{"category":"Vehicle Theft","label":"Weekend","hour":17,"avg_per_day":1.45},{"category":"Vehicle Theft","label":"Weekend","hour":18,"avg_per_day":1.4992},{"category":"Vehicle Theft","label":"Weekend","hour":19,"avg_per_day":1.5283},{"category":"Vehicle Theft","label":"Weekend","hour":20,"avg_per_day":1.5683},{"category":"Vehicle Theft","label":"Weekend","hour":21,"avg_per_day":1.5642},{"category":"Vehicle Theft","label":"Weekend","hour":22,"avg_per_day":1.6162},{"category":"Vehicle Theft","label":"Weekend","hour":23,"avg_per_day":1.4658},
+    {"category":"Warrants","label":"Weekday","hour":0,"avg_per_day":0.3103},{"category":"Warrants","label":"Weekday","hour":1,"avg_per_day":0.2155},{"category":"Warrants","label":"Weekday","hour":2,"avg_per_day":0.1807},{"category":"Warrants","label":"Weekday","hour":3,"avg_per_day":0.1257},{"category":"Warrants","label":"Weekday","hour":4,"avg_per_day":0.0838},{"category":"Warrants","label":"Weekday","hour":5,"avg_per_day":0.0625},{"category":"Warrants","label":"Weekday","hour":6,"avg_per_day":0.1068},{"category":"Warrants","label":"Weekday","hour":7,"avg_per_day":0.1835},{"category":"Warrants","label":"Weekday","hour":8,"avg_per_day":0.3118},{"category":"Warrants","label":"Weekday","hour":9,"avg_per_day":0.4747},{"category":"Warrants","label":"Weekday","hour":10,"avg_per_day":0.6083},{"category":"Warrants","label":"Weekday","hour":11,"avg_per_day":0.7165},{"category":"Warrants","label":"Weekday","hour":12,"avg_per_day":0.793},{"category":"Warrants","label":"Weekday","hour":13,"avg_per_day":0.8208},{"category":"Warrants","label":"Weekday","hour":14,"avg_per_day":0.8738},{"category":"Warrants","label":"Weekday","hour":15,"avg_per_day":0.8905},{"category":"Warrants","label":"Weekday","hour":16,"avg_per_day":0.9257},{"category":"Warrants","label":"Weekday","hour":17,"avg_per_day":0.876},{"category":"Warrants","label":"Weekday","hour":18,"avg_per_day":0.7618},{"category":"Warrants","label":"Weekday","hour":19,"avg_per_day":0.6672},{"category":"Warrants","label":"Weekday","hour":20,"avg_per_day":0.5985},{"category":"Warrants","label":"Weekday","hour":21,"avg_per_day":0.5478},{"category":"Warrants","label":"Weekday","hour":22,"avg_per_day":0.4975},{"category":"Warrants","label":"Weekday","hour":23,"avg_per_day":0.3943},
+    {"category":"Warrants","label":"Weekend","hour":0,"avg_per_day":0.3133},{"category":"Warrants","label":"Weekend","hour":1,"avg_per_day":0.2467},{"category":"Warrants","label":"Weekend","hour":2,"avg_per_day":0.21},{"category":"Warrants","label":"Weekend","hour":3,"avg_per_day":0.1533},{"category":"Warrants","label":"Weekend","hour":4,"avg_per_day":0.1033},{"category":"Warrants","label":"Weekend","hour":5,"avg_per_day":0.0733},{"category":"Warrants","label":"Weekend","hour":6,"avg_per_day":0.0833},{"category":"Warrants","label":"Weekend","hour":7,"avg_per_day":0.1183},{"category":"Warrants","label":"Weekend","hour":8,"avg_per_day":0.2117},{"category":"Warrants","label":"Weekend","hour":9,"avg_per_day":0.3358},{"category":"Warrants","label":"Weekend","hour":10,"avg_per_day":0.46},{"category":"Warrants","label":"Weekend","hour":11,"avg_per_day":0.5783},{"category":"Warrants","label":"Weekend","hour":12,"avg_per_day":0.6508},{"category":"Warrants","label":"Weekend","hour":13,"avg_per_day":0.6817},{"category":"Warrants","label":"Weekend","hour":14,"avg_per_day":0.7167},{"category":"Warrants","label":"Weekend","hour":15,"avg_per_day":0.7408},{"category":"Warrants","label":"Weekend","hour":16,"avg_per_day":0.7583},{"category":"Warrants","label":"Weekend","hour":17,"avg_per_day":0.7975},{"category":"Warrants","label":"Weekend","hour":18,"avg_per_day":0.7558},{"category":"Warrants","label":"Weekend","hour":19,"avg_per_day":0.6667},{"category":"Warrants","label":"Weekend","hour":20,"avg_per_day":0.5983},{"category":"Warrants","label":"Weekend","hour":21,"avg_per_day":0.545},{"category":"Warrants","label":"Weekend","hour":22,"avg_per_day":0.4958},{"category":"Warrants","label":"Weekend","hour":23,"avg_per_day":0.3975},
+    {"category":"Weapon Offense","label":"Weekday","hour":0,"avg_per_day":0.1355},{"category":"Weapon Offense","label":"Weekday","hour":1,"avg_per_day":0.0973},{"category":"Weapon Offense","label":"Weekday","hour":2,"avg_per_day":0.0833},{"category":"Weapon Offense","label":"Weekday","hour":3,"avg_per_day":0.0593},{"category":"Weapon Offense","label":"Weekday","hour":4,"avg_per_day":0.0398},{"category":"Weapon Offense","label":"Weekday","hour":5,"avg_per_day":0.0302},{"category":"Weapon Offense","label":"Weekday","hour":6,"avg_per_day":0.0407},{"category":"Weapon Offense","label":"Weekday","hour":7,"avg_per_day":0.0535},{"category":"Weapon Offense","label":"Weekday","hour":8,"avg_per_day":0.0705},{"category":"Weapon Offense","label":"Weekday","hour":9,"avg_per_day":0.0855},{"category":"Weapon Offense","label":"Weekday","hour":10,"avg_per_day":0.098},{"category":"Weapon Offense","label":"Weekday","hour":11,"avg_per_day":0.1113},{"category":"Weapon Offense","label":"Weekday","hour":12,"avg_per_day":0.1263},{"category":"Weapon Offense","label":"Weekday","hour":13,"avg_per_day":0.1317},{"category":"Weapon Offense","label":"Weekday","hour":14,"avg_per_day":0.1418},{"category":"Weapon Offense","label":"Weekday","hour":15,"avg_per_day":0.1492},{"category":"Weapon Offense","label":"Weekday","hour":16,"avg_per_day":0.1607},{"category":"Weapon Offense","label":"Weekday","hour":17,"avg_per_day":0.1713},{"category":"Weapon Offense","label":"Weekday","hour":18,"avg_per_day":0.1857},{"category":"Weapon Offense","label":"Weekday","hour":19,"avg_per_day":0.1742},{"category":"Weapon Offense","label":"Weekday","hour":20,"avg_per_day":0.1718},{"category":"Weapon Offense","label":"Weekday","hour":21,"avg_per_day":0.1685},{"category":"Weapon Offense","label":"Weekday","hour":22,"avg_per_day":0.1623},{"category":"Weapon Offense","label":"Weekday","hour":23,"avg_per_day":0.1488},
+    {"category":"Weapon Offense","label":"Weekend","hour":0,"avg_per_day":0.2213},{"category":"Weapon Offense","label":"Weekend","hour":1,"avg_per_day":0.1837},{"category":"Weapon Offense","label":"Weekend","hour":2,"avg_per_day":0.1696},{"category":"Weapon Offense","label":"Weekend","hour":3,"avg_per_day":0.12},{"category":"Weapon Offense","label":"Weekend","hour":4,"avg_per_day":0.0683},{"category":"Weapon Offense","label":"Weekend","hour":5,"avg_per_day":0.0308},{"category":"Weapon Offense","label":"Weekend","hour":6,"avg_per_day":0.0371},{"category":"Weapon Offense","label":"Weekend","hour":7,"avg_per_day":0.0488},{"category":"Weapon Offense","label":"Weekend","hour":8,"avg_per_day":0.0708},{"category":"Weapon Offense","label":"Weekend","hour":9,"avg_per_day":0.0862},{"category":"Weapon Offense","label":"Weekend","hour":10,"avg_per_day":0.0842},{"category":"Weapon Offense","label":"Weekend","hour":11,"avg_per_day":0.1108},{"category":"Weapon Offense","label":"Weekend","hour":12,"avg_per_day":0.1125},{"category":"Weapon Offense","label":"Weekend","hour":13,"avg_per_day":0.115},{"category":"Weapon Offense","label":"Weekend","hour":14,"avg_per_day":0.1233},{"category":"Weapon Offense","label":"Weekend","hour":15,"avg_per_day":0.1329},{"category":"Weapon Offense","label":"Weekend","hour":16,"avg_per_day":0.1517},{"category":"Weapon Offense","label":"Weekend","hour":17,"avg_per_day":0.1721},{"category":"Weapon Offense","label":"Weekend","hour":18,"avg_per_day":0.1588},{"category":"Weapon Offense","label":"Weekend","hour":19,"avg_per_day":0.1521},{"category":"Weapon Offense","label":"Weekend","hour":20,"avg_per_day":0.1579},{"category":"Weapon Offense","label":"Weekend","hour":21,"avg_per_day":0.1625},{"category":"Weapon Offense","label":"Weekend","hour":22,"avg_per_day":0.1938},{"category":"Weapon Offense","label":"Weekend","hour":23,"avg_per_day":0.1967}
   ]
 }</script>
 
@@ -1152,68 +599,55 @@ footer {
 (function() {
 "use strict";
 
-// ── DATA ──────────────────────────────────────────────
 const D = JSON.parse(document.getElementById('story-data').textContent);
 const categories = D.metadata.focus_categories;
 const rows = D.category_hour;
-const peaks = D.peaks;
 
-// ── CURSOR ────────────────────────────────────────────
+// CURSOR
 const cursor = document.getElementById('cursor');
 const cursorRing = document.getElementById('cursor-ring');
-let mx = 0, my = 0;
 document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
-  cursorRing.style.left = mx + 'px'; cursorRing.style.top = my + 'px';
+  cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+  cursorRing.style.left = e.clientX + 'px'; cursorRing.style.top = e.clientY + 'px';
 });
 
-// ── SCROLL PROGRESS ───────────────────────────────────
+// SCROLL PROGRESS
 const bar = document.getElementById('progress-bar');
 window.addEventListener('scroll', () => {
   const max = document.documentElement.scrollHeight - window.innerHeight;
   bar.style.width = (max > 0 ? window.scrollY / max * 100 : 0) + '%';
 }, { passive: true });
 
-// ── REVEAL ON SCROLL ──────────────────────────────────
+// REVEAL
 const revealObs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.08 });
+}, { threshold: 0.07 });
 document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-// ── 3D CITY CANVAS ────────────────────────────────────
+// 3D CITY CANVAS
 (function buildCity() {
   const canvas = document.getElementById('city-canvas');
   const ctx = canvas.getContext('2d');
-  let W, H, animId;
-  let t = 0;
-  let mouseX = 0.5;
+  let W, H, t = 0, mouseX = 0.5;
 
-  // building definitions: [x_pct, width_pct, height_pct, floors, has_antenna]
   const buildingDefs = [
-    [0.01, 0.03, 0.32, 8, false],[0.04, 0.04, 0.48, 12, true],
-    [0.08, 0.03, 0.38, 10, false],[0.11, 0.05, 0.55, 14, true],
-    [0.16, 0.04, 0.44, 11, false],[0.20, 0.06, 0.62, 16, true],
-    [0.26, 0.03, 0.36, 9, false],[0.29, 0.05, 0.52, 13, false],
-    [0.34, 0.07, 0.70, 18, true],[0.41, 0.04, 0.46, 12, false],
-    [0.45, 0.06, 0.58, 15, true],[0.51, 0.08, 0.75, 20, true],
-    [0.59, 0.05, 0.54, 14, false],[0.64, 0.04, 0.42, 11, false],
-    [0.68, 0.07, 0.68, 17, true],[0.75, 0.04, 0.50, 13, false],
-    [0.79, 0.06, 0.60, 16, true],[0.85, 0.03, 0.38, 10, false],
-    [0.88, 0.05, 0.52, 14, false],[0.93, 0.04, 0.44, 12, true],
-    [0.97, 0.03, 0.34, 9, false],
+    [0.01,0.03,0.32,8,false],[0.04,0.04,0.48,12,true],[0.08,0.03,0.38,10,false],
+    [0.11,0.05,0.55,14,true],[0.16,0.04,0.44,11,false],[0.20,0.06,0.62,16,true],
+    [0.26,0.03,0.36,9,false],[0.29,0.05,0.52,13,false],[0.34,0.07,0.70,18,true],
+    [0.41,0.04,0.46,12,false],[0.45,0.06,0.58,15,true],[0.51,0.08,0.75,20,true],
+    [0.59,0.05,0.54,14,false],[0.64,0.04,0.42,11,false],[0.68,0.07,0.68,17,true],
+    [0.75,0.04,0.50,13,false],[0.79,0.06,0.60,16,true],[0.85,0.03,0.38,10,false],
+    [0.88,0.05,0.52,14,false],[0.93,0.04,0.44,12,true],[0.97,0.03,0.34,9,false],
   ];
 
-  // window data per building
-  const buildings = buildingDefs.map(([xp, wp, hp, floors, ant]) => ({
-    xp, wp, hp, floors, ant,
-    windows: Array.from({length: floors * 3}, () => Math.random() < 0.65)
+  const buildings = buildingDefs.map(([xp,wp,hp,floors,ant]) => ({
+    xp,wp,hp,floors,ant,
+    windows: Array.from({length:floors*3}, () => Math.random() < 0.65)
   }));
 
-  // stars
-  const stars = Array.from({length:180}, () => ({
+  const stars = Array.from({length:200}, () => ({
     x: Math.random(), y: Math.random() * 0.6,
-    r: Math.random() * 1.2 + 0.3,
+    r: Math.random() * 1.3 + 0.3,
     twinkle: Math.random() * Math.PI * 2
   }));
 
@@ -1223,416 +657,122 @@ document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
     ctx.scale(devicePixelRatio, devicePixelRatio);
   }
 
-  function lerp(a,b,t){ return a + (b-a)*t; }
-
   function draw() {
     t += 0.012;
     ctx.clearRect(0, 0, W, H);
 
-    // Sky gradient — night
     const sky = ctx.createLinearGradient(0, 0, 0, H);
-    sky.addColorStop(0, '#010510');
-    sky.addColorStop(0.5, '#050a18');
-    sky.addColorStop(1, '#0a0f22');
-    ctx.fillStyle = sky;
-    ctx.fillRect(0, 0, W, H);
+    sky.addColorStop(0, '#010510'); sky.addColorStop(0.5, '#050a18'); sky.addColorStop(1, '#0a0f22');
+    ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
 
     // Moon
-    const moonX = W * 0.82;
-    const moonY = H * 0.18;
-    ctx.save();
-    const mg = ctx.createRadialGradient(moonX, moonY, 2, moonX, moonY, 36);
-    mg.addColorStop(0, 'rgba(255,240,200,0.95)');
-    mg.addColorStop(0.4, 'rgba(255,230,180,0.7)');
-    mg.addColorStop(1, 'rgba(255,210,140,0)');
-    ctx.fillStyle = mg;
-    ctx.beginPath(); ctx.arc(moonX, moonY, 36, 0, Math.PI*2); ctx.fill();
-    // moon glow
-    const mg2 = ctx.createRadialGradient(moonX, moonY, 30, moonX, moonY, 110);
-    mg2.addColorStop(0, 'rgba(240,185,60,0.08)');
-    mg2.addColorStop(1, 'rgba(240,185,60,0)');
-    ctx.fillStyle = mg2;
-    ctx.beginPath(); ctx.arc(moonX, moonY, 110, 0, Math.PI*2); ctx.fill();
-    ctx.restore();
+    const mx = W * 0.82, my = H * 0.16;
+    const mg = ctx.createRadialGradient(mx,my,2,mx,my,36);
+    mg.addColorStop(0,'rgba(255,240,200,0.95)'); mg.addColorStop(0.4,'rgba(255,230,180,0.7)'); mg.addColorStop(1,'rgba(255,210,140,0)');
+    ctx.fillStyle = mg; ctx.beginPath(); ctx.arc(mx,my,36,0,Math.PI*2); ctx.fill();
+    const mg2 = ctx.createRadialGradient(mx,my,30,mx,my,120);
+    mg2.addColorStop(0,'rgba(240,185,60,0.07)'); mg2.addColorStop(1,'rgba(240,185,60,0)');
+    ctx.fillStyle = mg2; ctx.beginPath(); ctx.arc(mx,my,120,0,Math.PI*2); ctx.fill();
 
     // Stars
     stars.forEach(s => {
-      const alpha = 0.4 + 0.6 * Math.abs(Math.sin(s.twinkle + t * 0.5));
+      const alpha = 0.35 + 0.65 * Math.abs(Math.sin(s.twinkle + t * 0.5));
       ctx.fillStyle = `rgba(255,255,240,${alpha})`;
-      ctx.beginPath();
-      ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI*2);
-      ctx.fill();
+      ctx.beginPath(); ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI*2); ctx.fill();
     });
-
-    // Fog layer near horizon
-    const fog = ctx.createLinearGradient(0, H*0.45, 0, H*0.60);
-    fog.addColorStop(0, 'rgba(5,12,30,0)');
-    fog.addColorStop(1, 'rgba(10,20,50,0.35)');
-    ctx.fillStyle = fog;
-    ctx.fillRect(0, H*0.45, W, H*0.2);
 
     // Ground
     const ground = ctx.createLinearGradient(0, H*0.72, 0, H);
-    ground.addColorStop(0, '#06090f');
-    ground.addColorStop(1, '#030608');
-    ctx.fillStyle = ground;
-    ctx.fillRect(0, H*0.72, W, H*0.28);
+    ground.addColorStop(0,'#06090f'); ground.addColorStop(1,'#030608');
+    ctx.fillStyle = ground; ctx.fillRect(0,H*0.72,W,H*0.28);
 
-    // Parallax offset from mouse
     const px = (mouseX - 0.5) * 18;
-
-    // BUILDINGS
     const groundY = H * 0.73;
+
     buildings.forEach((b, bi) => {
-      const depth = 0.5 + (bi % 3) * 0.17; // faux depth layers
+      const depth = 0.5 + (bi % 3) * 0.17;
       const bx = (b.xp * W + px * depth)|0;
       const bw = Math.max(18, b.wp * W);
       const bh = b.hp * H * 0.72;
       const by = groundY - bh;
 
-      // building shadow
-      ctx.fillStyle = `rgba(0,0,0,${0.3 * depth})`;
-      ctx.fillRect(bx + 6 * depth, by + 6, bw, bh);
+      ctx.fillStyle = `rgba(0,0,0,${0.3*depth})`;
+      ctx.fillRect(bx + 6*depth, by + 6, bw, bh);
 
-      // building body
-      const bg = ctx.createLinearGradient(bx, by, bx + bw, by);
+      const bg = ctx.createLinearGradient(bx,by,bx+bw,by);
       const hue = 210 + bi * 3;
-      bg.addColorStop(0, `hsl(${hue},18%,${8 + depth*4}%)`);
-      bg.addColorStop(1, `hsl(${hue},14%,${5 + depth*3}%)`);
-      ctx.fillStyle = bg;
-      ctx.fillRect(bx, by, bw, bh);
+      bg.addColorStop(0,`hsl(${hue},18%,${8+depth*4}%)`); bg.addColorStop(1,`hsl(${hue},14%,${5+depth*3}%)`);
+      ctx.fillStyle = bg; ctx.fillRect(bx,by,bw,bh);
+      ctx.fillStyle = `rgba(80,120,180,${0.15*depth})`; ctx.fillRect(bx,by,bw,2);
 
-      // building top edge highlight
-      ctx.fillStyle = `rgba(80,120,180,${0.15 * depth})`;
-      ctx.fillRect(bx, by, bw, 2);
-
-      // WINDOWS
-      const cols = 3;
-      const ww = Math.max(3, (bw - 8) / cols - 2);
-      const wh = Math.max(3, bh / b.floors * 0.45);
-      const floorH = bh / b.floors;
-
+      const cols = 3, ww = Math.max(3,(bw-8)/cols-2), wh = Math.max(3,bh/b.floors*0.45), floorH = bh/b.floors;
       b.windows.forEach((lit, wi) => {
-        const col = wi % cols;
-        const row = Math.floor(wi / cols);
-        const wx = bx + 4 + col * ((bw - 8) / cols);
-        const wy = by + 4 + row * floorH;
-        if (wy + wh > groundY) return;
-
+        const col = wi%cols, row = Math.floor(wi/cols);
+        const wx = bx+4+col*((bw-8)/cols), wy = by+4+row*floorH;
+        if (wy+wh > groundY) return;
         if (lit) {
-          // flickering warm light
-          const flicker = 0.75 + 0.25 * Math.sin(t * 2.3 + wi * 1.7 + bi * 3.1);
-          const warm = Math.random() < 0.15 ? '#f0d080' : '#f0c060';
-          ctx.fillStyle = warm;
-          ctx.globalAlpha = 0.65 * flicker;
-          ctx.fillRect(wx, wy, ww, wh);
-          // window glow
-          ctx.globalAlpha = 0.08 * flicker;
-          ctx.fillStyle = '#f0d080';
-          ctx.fillRect(wx - 2, wy - 2, ww + 4, wh + 4);
-          ctx.globalAlpha = 1;
+          const flicker = 0.75 + 0.25*Math.sin(t*2.3+wi*1.7+bi*3.1);
+          ctx.fillStyle = '#f0c060'; ctx.globalAlpha = 0.65*flicker;
+          ctx.fillRect(wx,wy,ww,wh);
+          ctx.globalAlpha = 0.07*flicker; ctx.fillStyle = '#f0d080';
+          ctx.fillRect(wx-2,wy-2,ww+4,wh+4); ctx.globalAlpha = 1;
         } else {
-          ctx.fillStyle = 'rgba(20,30,50,0.8)';
-          ctx.fillRect(wx, wy, ww, wh);
+          ctx.fillStyle = 'rgba(20,30,50,0.8)'; ctx.fillRect(wx,wy,ww,wh);
         }
       });
 
-      // antenna
       if (b.ant) {
-        const ax = bx + bw / 2;
-        const aTop = by - 18 - (bi % 4) * 8;
-        ctx.strokeStyle = `rgba(180,200,220,0.6)`;
-        ctx.lineWidth = 1.5;
-        ctx.beginPath(); ctx.moveTo(ax, by); ctx.lineTo(ax, aTop); ctx.stroke();
-        // blinking light
-        const blink = Math.sin(t * 2.8 + bi * 1.4) > 0.6;
-        if (blink) {
-          ctx.fillStyle = '#f05050';
-          ctx.globalAlpha = 0.9;
-          ctx.beginPath(); ctx.arc(ax, aTop, 2.5, 0, Math.PI*2); ctx.fill();
-          ctx.globalAlpha = 0.2;
-          ctx.beginPath(); ctx.arc(ax, aTop, 7, 0, Math.PI*2); ctx.fill();
+        const ax = bx+bw/2, aTop = by-18-(bi%4)*8;
+        ctx.strokeStyle = 'rgba(180,200,220,0.6)'; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(ax,by); ctx.lineTo(ax,aTop); ctx.stroke();
+        if (Math.sin(t*2.8+bi*1.4) > 0.6) {
+          ctx.fillStyle = '#f05050'; ctx.globalAlpha = 0.9;
+          ctx.beginPath(); ctx.arc(ax,aTop,2.5,0,Math.PI*2); ctx.fill();
+          ctx.globalAlpha = 0.2; ctx.beginPath(); ctx.arc(ax,aTop,7,0,Math.PI*2); ctx.fill();
           ctx.globalAlpha = 1;
         }
       }
     });
 
     // Street lights
-    const lightPositions = [0.1, 0.25, 0.42, 0.58, 0.74, 0.89];
-    lightPositions.forEach(lp => {
-      const lx = lp * W + px * 0.3;
-      const ly = groundY;
-      // post
-      ctx.strokeStyle = 'rgba(120,130,150,0.6)';
-      ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(lx, ly); ctx.lineTo(lx, ly - 40); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(lx, ly - 40); ctx.lineTo(lx + 10, ly - 44); ctx.stroke();
-      // lamp glow
-      const lg = ctx.createRadialGradient(lx+10, ly-44, 2, lx+10, ly-44, 35);
-      lg.addColorStop(0, 'rgba(240,200,80,0.9)');
-      lg.addColorStop(0.2, 'rgba(240,180,60,0.3)');
-      lg.addColorStop(1, 'rgba(240,160,40,0)');
-      ctx.fillStyle = lg;
-      ctx.beginPath(); ctx.arc(lx+10, ly-44, 35, 0, Math.PI*2); ctx.fill();
-      ctx.fillStyle = 'rgba(255,230,150,0.95)';
-      ctx.beginPath(); ctx.arc(lx+10, ly-44, 3, 0, Math.PI*2); ctx.fill();
+    [0.1,0.25,0.42,0.58,0.74,0.89].forEach(lp => {
+      const lx = lp*W+px*0.3, ly = groundY;
+      ctx.strokeStyle = 'rgba(120,130,150,0.6)'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(lx,ly); ctx.lineTo(lx,ly-40); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(lx,ly-40); ctx.lineTo(lx+10,ly-44); ctx.stroke();
+      const lg = ctx.createRadialGradient(lx+10,ly-44,2,lx+10,ly-44,35);
+      lg.addColorStop(0,'rgba(240,200,80,0.9)'); lg.addColorStop(0.2,'rgba(240,180,60,0.3)'); lg.addColorStop(1,'rgba(240,160,40,0)');
+      ctx.fillStyle = lg; ctx.beginPath(); ctx.arc(lx+10,ly-44,35,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle = 'rgba(255,230,150,0.95)'; ctx.beginPath(); ctx.arc(lx+10,ly-44,3,0,Math.PI*2); ctx.fill();
     });
-
-    // Street glow reflection
-    const streetGlow = ctx.createLinearGradient(0, groundY, 0, groundY + 30);
-    streetGlow.addColorStop(0, 'rgba(240,160,40,0.08)');
-    streetGlow.addColorStop(1, 'rgba(240,160,40,0)');
-    ctx.fillStyle = streetGlow;
-    ctx.fillRect(0, groundY, W, 30);
-
-    animId = requestAnimationFrame(draw);
-  }
-
-  window.addEventListener('mousemove', e => { mouseX = e.clientX / window.innerWidth; });
-  window.addEventListener('resize', () => { resize(); });
-  resize();
-  draw();
-})();
-
-// ── TIMELINE STRIP ────────────────────────────────────
-(function buildTimeline() {
-  const strip = document.getElementById('timeline-strip');
-  if (!strip) return;
-
-  // aggregate all categories to get total avg per hour
-  const hourTotals = new Array(24).fill(0);
-  const hourCounts = new Array(24).fill(0);
-  rows.forEach(r => {
-    hourTotals[r.hour] += r.avg_per_day;
-    hourCounts[r.hour]++;
-  });
-  const hourAvg = hourTotals.map((v, i) => v / (hourCounts[i] || 1));
-  const maxVal = Math.max(...hourAvg);
-
-  hourAvg.forEach((v, h) => {
-    const pct = v / maxVal;
-    const div = document.createElement('div');
-    div.className = 'timeline-hour';
-
-    // color: dawn/dusk warm, night cool
-    let hue, sat, lit;
-    if (h >= 6 && h <= 9) { hue=40; sat=80; lit=40+pct*30; }
-    else if (h >= 10 && h <= 16) { hue=200; sat=60; lit=30+pct*25; }
-    else if (h >= 17 && h <= 20) { hue=25; sat=85; lit=35+pct*30; }
-    else { hue=15; sat=90; lit=20+pct*40; }
-
-    div.style.cssText = `
-      background: hsl(${hue},${sat}%,${lit}%);
-      height: ${30 + pct * 50}%;
-      align-self: flex-end;
-      border-radius: 3px 3px 0 0;
-      flex: 1;
-      margin: 0 1px;
-      cursor: pointer;
-      transition: opacity 150ms;
-      position: relative;
-    `;
-
-    const tooltip = document.getElementById('tooltip');
-    div.addEventListener('mouseenter', e => {
-      const label = h < 12 ? `${h === 0 ? 12 : h}AM` : `${h === 12 ? 12 : h-12}PM`;
-      tooltip.innerHTML = `<strong>${label}</strong><br>${v.toFixed(1)} avg incidents`;
-      tooltip.style.opacity = 1;
-    });
-    div.addEventListener('mousemove', e => {
-      tooltip.style.left = (e.clientX + 12) + 'px';
-      tooltip.style.top = (e.clientY - 40) + 'px';
-    });
-    div.addEventListener('mouseleave', () => { tooltip.style.opacity = 0; });
-
-    strip.appendChild(div);
-  });
-})();
-
-// ── CRIME CLOCK (CANVAS) ──────────────────────────────
-(function buildClock() {
-  const canvas = document.getElementById('crime-clock');
-  const ctx = canvas.getContext('2d');
-  const displayHour = document.getElementById('clock-hour-display');
-  const displayCount = document.getElementById('clock-count-display');
-
-  const SIZE = 420;
-  canvas.width = SIZE * devicePixelRatio;
-  canvas.height = SIZE * devicePixelRatio;
-  canvas.style.width = '100%'; canvas.style.height = '100%';
-  ctx.scale(devicePixelRatio, devicePixelRatio);
-
-  const CX = SIZE / 2, CY = SIZE / 2;
-  const R_INNER = 70, R_OUTER = 160;
-
-  let mode = 'all'; // all / weekday / weekend
-  let hoveredHour = null;
-  let animFrame = 0;
-
-  // aggregate
-  function getHourData(m) {
-    const result = new Array(24).fill(0);
-    const counts = new Array(24).fill(0);
-    rows.forEach(r => {
-      if (m === 'weekday' && r.label !== 'Weekday') return;
-      if (m === 'weekend' && r.label !== 'Weekend') return;
-      result[r.hour] += r.avg_per_day;
-      counts[r.hour]++;
-    });
-    return result.map((v, i) => v / (counts[i] || 1));
-  }
-
-  let currentData = getHourData('all');
-  let targetData = getHourData('all');
-  let displayData = [...currentData];
-
-  document.getElementById('btn-all').addEventListener('click', () => { setMode('all'); });
-  document.getElementById('btn-weekday').addEventListener('click', () => { setMode('weekday'); });
-  document.getElementById('btn-weekend').addEventListener('click', () => { setMode('weekend'); });
-
-  function setMode(m) {
-    mode = m;
-    document.querySelectorAll('.clock-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('btn-' + m).classList.add('active');
-    targetData = getHourData(m);
-    animFrame = 0;
-  }
-
-  // mouse on canvas
-  canvas.addEventListener('mousemove', e => {
-    const rect = canvas.getBoundingClientRect();
-    const mx = (e.clientX - rect.left) / rect.width * SIZE;
-    const my = (e.clientY - rect.top) / rect.height * SIZE;
-    const dx = mx - CX, dy = my - CY;
-    const dist = Math.sqrt(dx*dx + dy*dy);
-    if (dist > R_INNER && dist < R_OUTER + 30) {
-      let angle = Math.atan2(dy, dx) + Math.PI / 2;
-      if (angle < 0) angle += Math.PI * 2;
-      hoveredHour = Math.round(angle / (Math.PI * 2 / 24)) % 24;
-    } else {
-      hoveredHour = null;
-    }
-  });
-  canvas.addEventListener('mouseleave', () => { hoveredHour = null; });
-
-  function draw() {
-    // animate toward target
-    animFrame++;
-    const ease = Math.min(1, animFrame / 30);
-    displayData = displayData.map((v, i) => v + (targetData[i] - v) * ease * 0.15);
-
-    ctx.clearRect(0, 0, SIZE, SIZE);
-
-    const maxVal = Math.max(...displayData);
-
-    // draw hour segments
-    for (let h = 0; h < 24; h++) {
-      const angle = (h / 24) * Math.PI * 2 - Math.PI / 2;
-      const nextAngle = ((h + 1) / 24) * Math.PI * 2 - Math.PI / 2;
-      const gap = 0.03;
-      const val = displayData[h];
-      const pct = val / maxVal;
-      const radius = R_INNER + pct * (R_OUTER - R_INNER);
-
-      const isNight = h >= 22 || h <= 5;
-      const isHovered = hoveredHour === h;
-
-      // color based on hour
-      let color;
-      if (h >= 6 && h <= 9) color = '#f0b930';
-      else if (h >= 10 && h <= 16) color = '#2ab8c8';
-      else if (h >= 17 && h <= 21) color = '#e8892a';
-      else color = '#f0622a';
-
-      ctx.save();
-      if (isHovered) { ctx.shadowColor = color; ctx.shadowBlur = 20; }
-      ctx.globalAlpha = isHovered ? 1 : 0.85;
-
-      ctx.beginPath();
-      ctx.arc(CX, CY, radius, angle + gap, nextAngle - gap);
-      ctx.arc(CX, CY, R_INNER, nextAngle - gap, angle + gap, true);
-      ctx.closePath();
-
-      // gradient fill
-      const gx = CX + Math.cos((angle+nextAngle)/2) * (R_INNER + radius) * 0.5;
-      const gy = CY + Math.sin((angle+nextAngle)/2) * (R_INNER + radius) * 0.5;
-      const grad = ctx.createRadialGradient(CX, CY, R_INNER, CX, CY, R_OUTER + 30);
-      grad.addColorStop(0, color + '80');
-      grad.addColorStop(1, color);
-      ctx.fillStyle = grad;
-      ctx.fill();
-      ctx.restore();
-
-      // hour tick label
-      if (h % 3 === 0) {
-        const lx = CX + Math.cos(angle) * (R_OUTER + 22);
-        const ly = CY + Math.sin(angle) * (R_OUTER + 22);
-        ctx.fillStyle = 'rgba(240,230,208,0.5)';
-        ctx.font = `500 11px "IBM Plex Mono", monospace`;
-        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        const label = h === 0 ? '12AM' : h === 12 ? '12PM' : h < 12 ? h+'AM' : (h-12)+'PM';
-        ctx.fillText(label, lx, ly);
-      }
-    }
-
-    // inner circle
-    ctx.beginPath();
-    ctx.arc(CX, CY, R_INNER - 2, 0, Math.PI * 2);
-    ctx.fillStyle = '#050a14';
-    ctx.fill();
-    ctx.strokeStyle = 'rgba(240,230,208,0.1)';
-    ctx.lineWidth = 1;
-    ctx.stroke();
-
-    // hovered annotation
-    if (hoveredHour !== null) {
-      const h = hoveredHour;
-      const label = h === 0 ? '12AM' : h === 12 ? '12PM' : h < 12 ? h + 'AM' : (h-12) + 'PM';
-      displayHour.textContent = label;
-      displayCount.textContent = displayData[h].toFixed(2) + ' avg/day';
-
-      // rotating hand
-      const handAngle = (h / 24) * Math.PI * 2 - Math.PI / 2;
-      ctx.strokeStyle = 'rgba(240,230,208,0.6)';
-      ctx.lineWidth = 1;
-      ctx.setLineDash([3, 4]);
-      ctx.beginPath();
-      ctx.moveTo(CX, CY);
-      ctx.lineTo(CX + Math.cos(handAngle) * R_OUTER, CY + Math.sin(handAngle) * R_OUTER);
-      ctx.stroke();
-      ctx.setLineDash([]);
-    }
 
     requestAnimationFrame(draw);
   }
 
-  draw();
+  window.addEventListener('mousemove', e => { mouseX = e.clientX/window.innerWidth; });
+  window.addEventListener('resize', resize);
+  resize(); draw();
 })();
 
-// ── LINE CHART ────────────────────────────────────────
+// LINE CHART
 (function buildLineChart() {
-  const weekdayData = [];
-  const weekendData = [];
+  const weekdayData = [], weekendData = [];
   for (let h = 0; h < 24; h++) {
-    let wdSum = 0, wdN = 0, weSum = 0, weN = 0;
+    let wdSum=0,wdN=0,weSum=0,weN=0;
     rows.forEach(r => {
       if (r.hour !== h) return;
-      if (r.label === 'Weekday') { wdSum += r.avg_per_day; wdN++; }
-      else { weSum += r.avg_per_day; weN++; }
+      if (r.label === 'Weekday') { wdSum+=r.avg_per_day; wdN++; }
+      else { weSum+=r.avg_per_day; weN++; }
     });
-    weekdayData.push(wdN > 0 ? wdSum / wdN : 0);
-    weekendData.push(weN > 0 ? weSum / weN : 0);
+    weekdayData.push(wdN > 0 ? wdSum/wdN : 0);
+    weekendData.push(weN > 0 ? weSum/weN : 0);
   }
 
-  const hours = Array.from({length:24},(_,i)=>i);
-  const labels = hours.map(h => h === 0 ? '12AM' : h < 12 ? h+'AM' : h === 12 ? '12PM' : (h-12)+'PM');
+  const labels = Array.from({length:24},(_,h) => h===0?'12AM':h<12?h+'AM':h===12?'12PM':(h-12)+'PM');
 
-  // Crossover annotation
   let crossoverH = null;
   for (let h = 10; h < 24; h++) {
-    if (weekendData[h] >= weekdayData[h] && weekendData[h-1] < weekdayData[h-1]) {
-      crossoverH = h; break;
-    }
+    if (weekendData[h] >= weekdayData[h] && weekendData[h-1] < weekdayData[h-1]) { crossoverH = h; break; }
   }
 
   const traces = [
@@ -1640,77 +780,58 @@ document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
       x: labels, y: weekdayData, name: 'Weekday',
       type: 'scatter', mode: 'lines',
       line: { color: '#2ab8c8', width: 3, shape: 'spline' },
-      fill: 'tonexty', fillcolor: 'rgba(42,184,200,0.05)',
+      fill: 'tozeroy', fillcolor: 'rgba(42,184,200,0.06)',
       hovertemplate: 'Weekday <b>%{x}</b><br>%{y:.2f} avg incidents<extra></extra>',
     },
     {
       x: labels, y: weekendData, name: 'Weekend',
       type: 'scatter', mode: 'lines',
       line: { color: '#f0622a', width: 3, shape: 'spline' },
-      fill: 'tonexty', fillcolor: 'rgba(240,98,42,0.05)',
+      fill: 'tozeroy', fillcolor: 'rgba(240,98,42,0.06)',
       hovertemplate: 'Weekend <b>%{x}</b><br>%{y:.2f} avg incidents<extra></extra>',
     }
   ];
 
   const layout = {
-    paper_bgcolor: 'rgba(0,0,0,0)',
-    plot_bgcolor: 'rgba(0,0,0,0)',
+    paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
     margin: { l: 44, r: 24, t: 20, b: 44 },
-    font: { family: 'IBM Plex Mono, monospace', color: 'rgba(240,230,208,0.6)', size: 11 },
-    legend: {
-      orientation: 'h', x: 0.02, y: 1.05,
-      font: { family: 'DM Sans, sans-serif', size: 13, color: 'rgba(240,230,208,0.9)' }
-    },
+    font: { family: 'IBM Plex Mono, monospace', color: 'rgba(240,230,208,0.55)', size: 11 },
+    legend: { orientation: 'h', x: 0.02, y: 1.05, font: { family: 'DM Sans, sans-serif', size: 13, color: 'rgba(240,230,208,0.9)' } },
     xaxis: {
-      gridcolor: 'rgba(240,230,208,0.06)',
-      tickcolor: 'rgba(240,230,208,0.2)',
-      linecolor: 'rgba(240,230,208,0.1)',
-      tickmode: 'array',
-      tickvals: labels.filter((_,i) => i % 3 === 0),
+      gridcolor: 'rgba(240,230,208,0.06)', tickcolor: 'rgba(240,230,208,0.2)', linecolor: 'rgba(240,230,208,0.1)',
+      tickmode: 'array', tickvals: labels.filter((_,i) => i%3===0),
+      title: { text: 'Hour of day', font: { size: 10 } }
     },
     yaxis: {
-      gridcolor: 'rgba(240,230,208,0.06)',
-      tickcolor: 'rgba(240,230,208,0.2)',
-      linecolor: 'rgba(240,230,208,0.1)',
+      gridcolor: 'rgba(240,230,208,0.06)', tickcolor: 'rgba(240,230,208,0.2)', linecolor: 'rgba(240,230,208,0.1)',
       title: { text: 'avg incidents / day', font: { size: 10 } }
     },
     shapes: crossoverH ? [{
-      type: 'line', x0: labels[crossoverH], x1: labels[crossoverH],
-      y0: 0, y1: 1, yref: 'paper',
-      line: { color: 'rgba(240,98,42,0.4)', width: 1, dash: 'dot' }
+      type: 'line', x0: labels[crossoverH], x1: labels[crossoverH], y0: 0, y1: 1, yref: 'paper',
+      line: { color: 'rgba(240,98,42,0.45)', width: 1.5, dash: 'dot' }
     }] : [],
     annotations: crossoverH ? [{
-      x: labels[crossoverH], y: 1, yref: 'paper',
-      text: '← crossover', showarrow: false,
-      font: { family: 'IBM Plex Mono', size: 10, color: 'rgba(240,98,42,0.7)' },
-      xanchor: 'left'
+      x: labels[crossoverH], y: 0.97, yref: 'paper', text: 'crossover →',
+      showarrow: false, font: { family: 'IBM Plex Mono', size: 10, color: 'rgba(240,98,42,0.8)' }, xanchor: 'right'
     }] : []
   };
 
-  Plotly.newPlot('line-chart', traces, layout, {
-    responsive: true, displayModeBar: false, scrollZoom: false
-  });
+  Plotly.newPlot('line-chart', traces, layout, { responsive: true, displayModeBar: false });
 })();
 
-// ── HEATMAP ───────────────────────────────────────────
+// HEATMAP
 (function buildHeatmap() {
   const grid = document.getElementById('heatmap-grid');
   if (!grid) return;
-
   const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
   const dayFull = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-
-  // Synthetic day×hour data using category data
-  // We'll weight by day type: Mon-Fri = weekday, Sat-Sun = weekend
-  // and use hour averages
   const isWeekend = [false,false,false,false,false,true,true];
 
   const hourTotals = {};
   rows.forEach(r => {
     const key = `${r.label}-${r.hour}`;
     if (!hourTotals[key]) hourTotals[key] = {sum:0,n:0};
-    hourTotals[key].sum += r.avg_per_day;
-    hourTotals[key].n++;
+    hourTotals[key].sum += r.avg_per_day; hourTotals[key].n++;
   });
 
   const cells = days.map((_, di) => {
@@ -1718,9 +839,8 @@ document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
     return Array.from({length:24}, (_,h) => {
       const k = `${we?'Weekend':'Weekday'}-${h}`;
       const entry = hourTotals[k];
-      // add variation per day
-      const dayMult = di === 4 ? 1.15 : di === 5 ? 1.25 : di === 6 ? 1.1 : di === 0 ? 0.9 : 1.0;
-      return entry ? (entry.sum / entry.n) * dayMult : 0;
+      const dayMult = di===4?1.15:di===5?1.25:di===6?1.1:di===0?0.9:1.0;
+      return entry ? (entry.sum/entry.n)*dayMult : 0;
     });
   });
 
@@ -1728,211 +848,321 @@ document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
   const minV = Math.min(...allVals), maxV = Math.max(...allVals);
 
   function valToColor(v) {
-    const t = (v - minV) / (maxV - minV);
-    if (t < 0.25) return `rgba(10,20,40,${0.3 + t*1.5})`;
+    const t = (v-minV)/(maxV-minV);
+    if (t < 0.25) return `rgba(10,20,40,${0.3+t*1.5})`;
     if (t < 0.5) return `hsl(200,${40+t*40}%,${15+t*15}%)`;
     if (t < 0.75) return `hsl(${30-t*60},${70+t*20}%,${25+t*15}%)`;
-    return `hsl(${10},${85}%,${30+t*20}%)`;
-  }
-
-  // Header row
-  const cornerEl = document.createElement('div');
-  cornerEl.className = 'hm-header';
-  grid.appendChild(cornerEl);
-
-  for (let h = 0; h < 24; h++) {
-    const el = document.createElement('div');
-    el.className = 'hm-header';
-    el.style.fontSize = '0.5rem';
-    el.textContent = h % 3 === 0 ? (h === 0 ? '12a' : h < 12 ? h+'a' : h === 12 ? '12p' : (h-12)+'p') : '';
-    grid.appendChild(el);
+    return `hsl(10,85%,${30+t*20}%)`;
   }
 
   const tooltip = document.getElementById('tooltip');
 
-  days.forEach((day, di) => {
-    const labelEl = document.createElement('div');
-    labelEl.className = 'hm-row-label';
-    labelEl.textContent = day;
-    grid.appendChild(labelEl);
+  // headers
+  const corner = document.createElement('div'); corner.className='hm-header'; grid.appendChild(corner);
+  for (let h = 0; h < 24; h++) {
+    const el = document.createElement('div'); el.className='hm-header'; el.style.fontSize='0.5rem';
+    el.textContent = h%3===0?(h===0?'12a':h<12?h+'a':h===12?'12p':(h-12)+'p'):'';
+    grid.appendChild(el);
+  }
 
-    for (let h = 0; h < 24; h++) {
+  days.forEach((day, di) => {
+    const lbl = document.createElement('div'); lbl.className='hm-row-label'; lbl.textContent=day; grid.appendChild(lbl);
+    for (let h=0; h<24; h++) {
       const v = cells[di][h];
-      const el = document.createElement('div');
-      el.className = 'hm-cell';
-      el.style.background = valToColor(v);
-      el.addEventListener('mouseenter', e => {
-        const hLabel = h === 0 ? '12AM' : h < 12 ? h+'AM' : h === 12 ? '12PM' : (h-12)+'PM';
+      const el = document.createElement('div'); el.className='hm-cell'; el.style.background=valToColor(v);
+      el.addEventListener('mouseenter', () => {
+        const hLabel = h===0?'12AM':h<12?h+'AM':h===12?'12PM':(h-12)+'PM';
         tooltip.innerHTML = `<strong>${dayFull[di]}, ${hLabel}</strong><br>${v.toFixed(2)} avg incidents`;
-        tooltip.style.opacity = 1;
+        tooltip.style.opacity=1;
       });
-      el.addEventListener('mousemove', e => {
-        tooltip.style.left = (e.clientX + 12) + 'px';
-        tooltip.style.top = (e.clientY - 44) + 'px';
-      });
-      el.addEventListener('mouseleave', () => { tooltip.style.opacity = 0; });
+      el.addEventListener('mousemove', e => { tooltip.style.left=(e.clientX+12)+'px'; tooltip.style.top=(e.clientY-44)+'px'; });
+      el.addEventListener('mouseleave', () => { tooltip.style.opacity=0; });
       grid.appendChild(el);
     }
   });
 })();
 
-// ── POLAR CHART ───────────────────────────────────────
-(function buildPolar() {
-  const select = document.getElementById('category-select');
-  const pillsContainer = document.getElementById('category-pills');
-  const el = document.getElementById('polar-chart');
+// CUSTOM CANVAS CRIME CLOCK
+(function buildCrimeClock() {
+  const canvas = document.getElementById('crime-clock-canvas');
+  const ctx = canvas.getContext('2d');
+  const select = document.getElementById('crime-clock-select');
+  const btnWd = document.getElementById('btn-wd');
+  const btnWe = document.getElementById('btn-we');
+  const btnBoth = document.getElementById('btn-both');
+  const hoverInfo = document.getElementById('clock-hover-info');
+  const peakWd = document.getElementById('clock-peak-wd');
+  const peakWdSub = document.getElementById('clock-peak-wd-sub');
+  const peakWe = document.getElementById('clock-peak-we');
+  const peakWeSub = document.getElementById('clock-peak-we-sub');
 
-  // populate select + pills
+  let mode = 'both'; // 'wd', 'we', 'both'
+  let currentCat = 'Robbery';
+  let hoveredHour = null;
+  let animT = 0;
+  let wdData = [], weData = [];
+  let animWd = new Array(24).fill(0);
+  let animWe = new Array(24).fill(0);
+
+  // Populate select
   categories.forEach(cat => {
     const opt = document.createElement('option');
     opt.value = cat; opt.textContent = cat;
     select.appendChild(opt);
-
-    const pill = document.createElement('button');
-    pill.className = 'category-pill';
-    pill.textContent = cat;
-    pill.addEventListener('click', () => {
-      select.value = cat;
-      render(cat);
-      document.querySelectorAll('.category-pill').forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
-    });
-    pillsContainer.appendChild(pill);
   });
-
-  // set default
   select.value = 'Robbery';
-  pillsContainer.querySelector('.category-pill').classList.remove('active');
-  [...pillsContainer.querySelectorAll('.category-pill')].find(p => p.textContent === 'Robbery')?.classList.add('active');
 
-  select.addEventListener('change', () => {
-    render(select.value);
-    [...pillsContainer.querySelectorAll('.category-pill')].forEach(p => {
-      p.classList.toggle('active', p.textContent === select.value);
+  function getCatData(cat) {
+    const wd = new Array(24).fill(0), we = new Array(24).fill(0);
+    rows.forEach(r => {
+      if (r.category !== cat) return;
+      if (r.label === 'Weekday') wd[r.hour] = r.avg_per_day;
+      else we[r.hour] = r.avg_per_day;
     });
-  });
-
-  function render(cat) {
-    const sub = rows.filter(r => r.category === cat);
-    const wd = sub.filter(r => r.label === 'Weekday').sort((a,b) => a.hour - b.hour);
-    const we = sub.filter(r => r.label === 'Weekend').sort((a,b) => a.hour - b.hour);
-
-    const traces = [
-      {
-        type: 'barpolar',
-        r: wd.map(r => r.avg_per_day),
-        theta: wd.map(r => r.hour * 15),
-        width: new Array(24).fill(14),
-        name: 'Weekday',
-        marker: {
-          color: '#2ab8c8',
-          line: { color: 'rgba(42,184,200,0.5)', width: 1 },
-          opacity: 0.85
-        },
-        hovertemplate: '<b>Weekday %{customdata}:00</b><br>%{r:.2f} avg/day<extra></extra>',
-        customdata: wd.map(r => r.hour),
-      },
-      {
-        type: 'barpolar',
-        r: we.map(r => r.avg_per_day),
-        theta: we.map(r => r.hour * 15),
-        width: new Array(24).fill(9),
-        name: 'Weekend',
-        marker: {
-          color: '#f0622a',
-          line: { color: 'rgba(240,98,42,0.5)', width: 1 },
-          opacity: 0.85
-        },
-        hovertemplate: '<b>Weekend %{customdata}:00</b><br>%{r:.2f} avg/day<extra></extra>',
-        customdata: we.map(r => r.hour),
-      }
-    ];
-
-    const layout = {
-      paper_bgcolor: 'rgba(0,0,0,0)',
-      plot_bgcolor: 'rgba(0,0,0,0)',
-      margin: { l: 30, r: 30, t: 30, b: 30 },
-      font: { family: 'IBM Plex Mono, monospace', color: 'rgba(240,230,208,0.55)', size: 10 },
-      legend: {
-        orientation: 'h', x: 0.02, y: 1.04,
-        font: { family: 'DM Sans, sans-serif', size: 13, color: 'rgba(240,230,208,0.9)' }
-      },
-      polar: {
-        bgcolor: 'rgba(0,0,0,0)',
-        radialaxis: {
-          angle: 90, showline: false,
-          gridcolor: 'rgba(240,230,208,0.08)',
-          tickfont: { size: 9, color: 'rgba(240,230,208,0.4)' },
-        },
-        angularaxis: {
-          direction: 'clockwise', rotation: 90,
-          tickmode: 'array',
-          tickvals: [0, 45, 90, 135, 180, 225, 270, 315],
-          ticktext: ['12AM','3AM','6AM','9AM','12PM','3PM','6PM','9PM'],
-          gridcolor: 'rgba(240,230,208,0.06)',
-          tickfont: { size: 9, color: 'rgba(240,230,208,0.4)' },
-        }
-      }
-    };
-
-    Plotly.react(el, traces, layout, { responsive: true, displayModeBar: false });
+    return { wd, we };
   }
 
-  render('Robbery');
+  function updatePeaks(wd, we) {
+    let wdMax = 0, wdPeak = 0, weMax = 0, wePeak = 0;
+    wd.forEach((v,h) => { if(v > wdMax) { wdMax=v; wdPeak=h; } });
+    we.forEach((v,h) => { if(v > weMax) { weMax=v; wePeak=h; } });
+    const fmt = h => h===0?'12AM':h<12?h+'AM':h===12?'12PM':(h-12)+'PM';
+    peakWd.textContent = fmt(wdPeak);
+    peakWdSub.textContent = `weekday · ${wdMax.toFixed(2)} avg/day`;
+    peakWe.textContent = fmt(wePeak);
+    peakWeSub.textContent = `weekend · ${weMax.toFixed(2)} avg/day`;
+  }
+
+  function loadCat(cat) {
+    const d = getCatData(cat);
+    wdData = d.wd; weData = d.we;
+    updatePeaks(wdData, weData);
+  }
+
+  loadCat('Robbery');
+
+  // Mode buttons
+  [btnWd, btnWe, btnBoth].forEach(b => {
+    b.addEventListener('click', () => {
+      btnWd.className = 'clock-toggle-btn'; btnWe.className = 'clock-toggle-btn'; btnBoth.className = 'clock-toggle-btn';
+      if (b === btnWd) { mode='wd'; btnWd.className='clock-toggle-btn active-wd'; }
+      else if (b === btnWe) { mode='we'; btnWe.className='clock-toggle-btn active-we'; }
+      else { mode='both'; btnBoth.className='clock-toggle-btn active-both'; }
+    });
+  });
+
+  select.addEventListener('change', () => { currentCat = select.value; loadCat(currentCat); });
+
+  // Resize
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const size = Math.min(rect.width - 224, 480);
+    canvas.width = size * devicePixelRatio;
+    canvas.height = size * devicePixelRatio;
+    canvas.style.width = size + 'px';
+    canvas.style.height = size + 'px';
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  // Mouse hover
+  canvas.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const cx = (canvas.width / devicePixelRatio) / 2;
+    const cy = (canvas.height / devicePixelRatio) / 2;
+    const mx = (e.clientX - rect.left);
+    const my = (e.clientY - rect.top);
+    const dx = mx - cx, dy = my - cy;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    const R_INNER = cx * 0.22, R_OUTER = cx * 0.82;
+
+    if (dist >= R_INNER && dist <= R_OUTER + cx*0.1) {
+      let angle = Math.atan2(dy, dx) + Math.PI/2;
+      if (angle < 0) angle += Math.PI*2;
+      hoveredHour = Math.floor(angle / (Math.PI*2/24)) % 24;
+    } else {
+      hoveredHour = null;
+    }
+
+    if (hoveredHour !== null) {
+      const h = hoveredHour;
+      const fmt = h => h===0?'12AM':h<12?h+'AM':h===12?'12PM':(h-12)+'PM';
+      let html = `<span style="font-size:1rem;color:var(--ink)">${fmt(h)}</span><br>`;
+      if (mode === 'wd' || mode === 'both') html += `<span style="color:var(--teal)">Weekday: ${wdData[h].toFixed(2)}</span><br>`;
+      if (mode === 'we' || mode === 'both') html += `<span style="color:var(--orange)">Weekend: ${weData[h].toFixed(2)}</span>`;
+      hoverInfo.innerHTML = html;
+    } else {
+      hoverInfo.innerHTML = '<span style="color:var(--dim)">Hover any slice to see exact counts at that hour.</span>';
+    }
+  });
+  canvas.addEventListener('mouseleave', () => { hoveredHour = null; hoverInfo.innerHTML = '<span style="color:var(--dim)">Move your cursor over any slice of the clock to see the average number of incidents at that hour.</span>'; });
+
+  // Draw loop
+  function drawClock() {
+    animT++;
+    const ease = 0.12;
+    animWd = animWd.map((v,i) => v + (wdData[i]-v)*ease);
+    animWe = animWe.map((v,i) => v + (weData[i]-v)*ease);
+
+    const W = canvas.width / devicePixelRatio;
+    const H = canvas.height / devicePixelRatio;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.save();
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+
+    const cx = W/2, cy = H/2;
+    const R_INNER = cx * 0.22;
+    const R_OUTER_MAX = cx * 0.82;
+
+    const allVals = [...(mode!=='we'?animWd:[]), ...(mode!=='wd'?animWe:[])];
+    const maxVal = Math.max(...allVals, 0.001);
+
+    const GAP = 0.04;
+
+    for (let h = 0; h < 24; h++) {
+      const startAngle = (h/24)*Math.PI*2 - Math.PI/2;
+      const endAngle = ((h+1)/24)*Math.PI*2 - Math.PI/2;
+      const isHov = hoveredHour === h;
+
+      // Determine colors & radii based on mode
+      const wdR = R_INNER + (animWd[h]/maxVal)*(R_OUTER_MAX - R_INNER);
+      const weR = R_INNER + (animWe[h]/maxVal)*(R_OUTER_MAX - R_INNER);
+
+      if (mode === 'both') {
+        // Draw weekday outer ring
+        drawSlice(ctx, cx, cy, R_INNER, wdR, startAngle, endAngle, GAP, '#2ab8c8', isHov ? 1 : 0.82, isHov);
+        // Draw weekend inner ring (slightly smaller so both visible)
+        const weInnerR = R_INNER;
+        const weOuterR = R_INNER + (animWe[h]/maxVal)*(R_OUTER_MAX - R_INNER) * 0.72;
+        drawSlice(ctx, cx, cy, weInnerR + 2, weOuterR, startAngle, endAngle, GAP+0.04, '#f0622a', isHov ? 0.95 : 0.7, false);
+      } else if (mode === 'wd') {
+        drawSlice(ctx, cx, cy, R_INNER, wdR, startAngle, endAngle, GAP, '#2ab8c8', isHov ? 1 : 0.85, isHov);
+      } else {
+        drawSlice(ctx, cx, cy, R_INNER, weR, startAngle, endAngle, GAP, '#f0622a', isHov ? 1 : 0.85, isHov);
+      }
+
+      // Hour tick labels
+      if (h % 3 === 0) {
+        const tickAngle = startAngle;
+        const lx = cx + Math.cos(tickAngle) * (R_OUTER_MAX + 18);
+        const ly = cy + Math.sin(tickAngle) * (R_OUTER_MAX + 18);
+        ctx.fillStyle = isHov ? 'rgba(240,230,208,0.9)' : 'rgba(240,230,208,0.38)';
+        ctx.font = `500 10px "IBM Plex Mono", monospace`;
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        const fmt = hh => hh===0?'12AM':hh<12?hh+'AM':hh===12?'12PM':(hh-12)+'PM';
+        ctx.fillText(fmt(h), lx, ly);
+      }
+
+      // Hover radial line
+      if (isHov) {
+        ctx.save();
+        ctx.strokeStyle = 'rgba(240,230,208,0.4)';
+        ctx.lineWidth = 1; ctx.setLineDash([3,5]);
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        const midAngle = (startAngle + endAngle)/2;
+        ctx.lineTo(cx + Math.cos(midAngle)*R_OUTER_MAX*1.05, cy + Math.sin(midAngle)*R_OUTER_MAX*1.05);
+        ctx.stroke(); ctx.setLineDash([]);
+        ctx.restore();
+      }
+    }
+
+    // Radial guide rings
+    [0.33, 0.66, 1.0].forEach(f => {
+      ctx.beginPath();
+      ctx.arc(cx, cy, R_INNER + f*(R_OUTER_MAX - R_INNER), 0, Math.PI*2);
+      ctx.strokeStyle = 'rgba(240,230,208,0.05)';
+      ctx.lineWidth = 1; ctx.stroke();
+    });
+
+    // Inner fill circle
+    ctx.beginPath(); ctx.arc(cx, cy, R_INNER-1, 0, Math.PI*2);
+    ctx.fillStyle = '#050a14'; ctx.fill();
+    ctx.strokeStyle = 'rgba(240,230,208,0.12)'; ctx.lineWidth = 1; ctx.stroke();
+
+    // Center labels
+    ctx.font = `bold 13px "IBM Plex Mono", monospace`;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    if (mode === 'both') {
+      ctx.fillStyle = '#2ab8c8'; ctx.fillText('WD', cx, cy - 9);
+      ctx.fillStyle = '#f0622a'; ctx.fillText('WE', cx, cy + 9);
+    } else if (mode === 'wd') {
+      ctx.fillStyle = '#2ab8c8'; ctx.fillText('WD', cx, cy);
+    } else {
+      ctx.fillStyle = '#f0622a'; ctx.fillText('WE', cx, cy);
+    }
+
+    // Legend
+    if (mode === 'both') {
+      ctx.font = '11px "IBM Plex Mono", monospace';
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#2ab8c8'; ctx.fillRect(12, H-38, 10, 10);
+      ctx.fillStyle = 'rgba(240,230,208,0.5)'; ctx.fillText('Weekday', 26, H-30);
+      ctx.fillStyle = '#f0622a'; ctx.fillRect(12, H-22, 10, 10);
+      ctx.fillStyle = 'rgba(240,230,208,0.5)'; ctx.fillText('Weekend (inner)', 26, H-14);
+    }
+
+    ctx.restore();
+    requestAnimationFrame(drawClock);
+  }
+
+  function drawSlice(ctx, cx, cy, rIn, rOut, a1, a2, gap, color, alpha, glow) {
+    ctx.save();
+    if (glow) { ctx.shadowColor = color; ctx.shadowBlur = 18; }
+    ctx.globalAlpha = alpha;
+    ctx.beginPath();
+    ctx.arc(cx, cy, Math.max(rIn, rOut), a1+gap, a2-gap);
+    ctx.arc(cx, cy, rIn, a2-gap, a1+gap, true);
+    ctx.closePath();
+    const mid = (a1+a2)/2;
+    const gx = cx + Math.cos(mid)*(rIn+rOut)*0.5, gy = cy + Math.sin(mid)*(rIn+rOut)*0.5;
+    const grad = ctx.createRadialGradient(cx, cy, rIn, cx, cy, rOut+20);
+    grad.addColorStop(0, color+'50'); grad.addColorStop(1, color);
+    ctx.fillStyle = grad; ctx.fill();
+    ctx.restore();
+  }
+
+  drawClock();
 })();
 
-// ── PEAKS GRID ────────────────────────────────────────
+// PEAKS GRID
 (function buildPeaksGrid() {
   const grid = document.getElementById('peaks-grid');
   if (!grid) return;
 
-  // Group peaks by category, pick the highest avg
-  const catPeak = {};
-  peaks.forEach(p => {
-    if (!catPeak[p.category] || p.avg_per_day > catPeak[p.category].avg_per_day) {
-      catPeak[p.category] = p;
-    }
-  });
-
   const icons = {
-    'Robbery': '🚨',
-    'Vehicle Theft': '🚗',
-    'Drug Offense': '💊',
-    'Warrants': '📋',
-    'Weapon Offense': '⚠️',
-    'Missing Person': '🔍',
-    'Non-Criminal': '📞'
+    'Robbery':'🚨','Vehicle Theft':'🚗','Drug Offense':'💊',
+    'Warrants':'📋','Weapon Offense':'⚠️','Missing Person':'🔍','Non-Criminal':'📞'
   };
-
   const notes = {
-    'Robbery': 'Surges after midnight on weekends — peaks at 2AM Saturday',
-    'Vehicle Theft': 'Evening rush hour — both weekday 6PM and weekend 10PM',
-    'Drug Offense': 'Strongly daytime — 2PM weekday peak, fades after dark',
-    'Warrants': 'Business hours phenomenon — 4-5PM peak both days',
-    'Weapon Offense': 'Midnight weekends — but spread across whole evening',
-    'Missing Person': 'Lunchtime reports — 12PM peak holds on both day types',
-    'Non-Criminal': 'Noon peak every day — routine reporting pattern'
+    'Robbery':'Surges past midnight on weekends — the bar-close effect. Weekend 2AM sees 50% more robberies than any weekday hour.',
+    'Vehicle Theft':'An evening commuter problem. Both weekday 6PM and weekend 10PM spike — cars parked and left unattended after work or a night out.',
+    'Drug Offense':'A strongly daytime category. Weekday 2PM is the absolute peak; activity fades sharply after dark, the opposite of what most people expect.',
+    'Warrants':'Business-hours enforcement. Warrant-related arrests cluster 4–5PM on both day types, driven by officers on active patrol shifts.',
+    'Weapon Offense':'Midnight weekends dominate — but the elevation spans the entire evening from 9PM onward, not just a single spike.',
+    'Missing Person':'Reports file at noon every day. People are reported missing mid-day when absence is first noticed, making this the most time-of-reporting driven category.',
+    'Non-Criminal':'Routine noon reports. Police-assist calls, welfare checks, and administrative incidents fill lunch hours consistently across all days.'
   };
 
-  Object.entries(catPeak).forEach(([cat, p]) => {
-    const hLabel = p.hour === 0 ? '12AM' : p.hour < 12 ? p.hour+'AM' : p.hour === 12 ? '12PM' : (p.hour-12)+'PM';
-    const isNight = p.hour >= 20 || p.hour <= 5;
-    const accent = p.label === 'Weekend' ? '#f0622a' : '#2ab8c8';
+  categories.forEach(cat => {
+    // Find peak for this category
+    const catRows = rows.filter(r => r.category === cat);
+    let peak = catRows[0];
+    catRows.forEach(r => { if(r.avg_per_day > peak.avg_per_day) peak = r; });
 
+    const fmt = h => h===0?'12AM':h<12?h+'AM':h===12?'12PM':(h-12)+'PM';
+    const accent = peak.label==='Weekend' ? 'var(--orange)' : 'var(--teal)';
     const card = document.createElement('div');
-    card.style.cssText = `
-      padding: 20px;
-      border-radius: 16px;
-      background: rgba(10,18,32,0.6);
-      border: 1px solid rgba(240,230,208,0.08);
-      border-top: 2px solid ${accent};
-    `;
+    card.className = 'peak-card';
+    card.style.borderTop = `2px solid ${accent}`;
     card.innerHTML = `
-      <div style="font-size:1.6rem;margin-bottom:10px">${icons[cat] || '•'}</div>
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:rgba(240,230,208,0.4);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:6px">${cat}</div>
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:${accent};line-height:1">${hLabel}</div>
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:rgba(240,230,208,0.5);margin:4px 0 10px">${p.label} · ${p.avg_per_day.toFixed(2)} avg/day</div>
-      <div style="font-size:0.82rem;color:rgba(240,230,208,0.55);line-height:1.5">${notes[cat]||''}</div>
+      <div class="peak-icon">${icons[cat]||'•'}</div>
+      <div class="peak-cat">${cat}</div>
+      <div class="peak-hour" style="color:${accent}">${fmt(peak.hour)}</div>
+      <div class="peak-meta">${peak.label} · ${peak.avg_per_day.toFixed(2)} avg incidents/day</div>
+      <div class="peak-note">${notes[cat]||''}</div>
     `;
     grid.appendChild(card);
   });
