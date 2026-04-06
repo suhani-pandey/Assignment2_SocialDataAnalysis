@@ -767,8 +767,8 @@ footer {
         <div class="viz-label">Fig 01 — Weekday vs Weekend <span>avg incidents / hour</span></div>
         <div id="line-chart" style="height:420px; padding:10px;"></div>
         <div class="viz-caption-block">
-          <strong>How to read this chart</strong>
-          <p>This line chart compares the average number of crime incidents per hour across all seven crime categories. The <strong>x-axis</strong> represents each hour of the day (0–23, where 0 is midnight and 23 is 11PM). The <strong>y-axis</strong> shows the average number of incidents occurring at that hour. <span class="teal"><strong>Teal line = weekdays</strong></span> (Monday–Friday), <span style="color:var(--orange)"><strong>orange line = weekends</strong></span> (Saturday–Sunday). When you <strong>hover over any point</strong>, you'll see the exact average number of incidents per day at that specific hour. <em>A higher number means more incidents happen at that time (peak/hotspot), while a lower number means fewer incidents (quieter period).</em> This chart reveals how crime patterns dramatically shift between weekdays and weekends, especially the critical "crossover" moment after 10PM when weekend crime surges above weekday levels.</p>
+          <strong>Fig 01 — Hourly Crime Patterns: Weekday vs Weekend</strong>
+          <p>Line chart comparing average crime incidents per hour across all seven categories. <strong>X-axis</strong>: hours of the day (0–23, midnight to 11PM). <strong>Y-axis</strong>: average incidents per hour. <span class="teal"><strong>Teal line</strong></span>: weekdays (Monday–Friday). <span style="color:var(--orange)"><strong>Orange line</strong></span>: weekends (Saturday–Sunday). Hover reveals exact values. Chart demonstrates the dramatic "crossover" at 10PM when weekend crime surges above weekday levels, remaining elevated until 3AM.</p>
         </div>
       </div>
     </div>
@@ -789,8 +789,8 @@ footer {
           <div class="heatmap-grid" id="heatmap-grid"></div>
         </div>
         <div class="viz-caption-block">
-          <strong>How to read this heatmap</strong>
-          <p>This heatmap displays the entire week's crime pattern in one view. The <strong>x-axis (horizontal)</strong> shows all 24 hours of the day (0–23, where 0 is midnight and 23 is 11PM). The <strong>y-axis (vertical)</strong> shows days of the week (Monday through Sunday). Each cell represents one specific day-hour combination. <span style="color:var(--orange)"><strong>Color intensity (darker orange) = more crime</strong></span> — brighter, more saturated orange cells indicate higher average incidents, while darker/dimmer cells indicate fewer incidents. When you <strong>hover over any cell</strong>, you'll see the exact average number of incidents occurring at that specific day and hour per day throughout the dataset (2003–2025). <em>Higher numbers indicate peak crime times (hotspots), lower numbers indicate quieter, less risky periods.</em> This visualization makes the dramatic late-week spike clearly visible — notice how Friday and Saturday evenings burn bright orange compared to the rest of the week.</p>
+          <strong>Fig 02 — Weekly Crime Heatmap: Day × Hour Intensity</strong>
+          <p>Heatmap displaying crime patterns across the entire week. <strong>X-axis (horizontal)</strong>: 24 hours (0–23, midnight to 11PM). <strong>Y-axis (vertical)</strong>: days (Monday–Sunday). Each cell represents one day-hour combination. <strong>Color intensity</strong>: darker/more saturated orange indicates higher crime; lighter/dimmer indicates fewer incidents. Hover reveals exact values. Visualization clearly shows the late-week spike, with Friday and Saturday evenings displaying significantly elevated crime compared to weekday patterns.</p>
         </div>
       </div>
     </div>
@@ -980,8 +980,8 @@ footer {
           </div>
         </div>
         <div class="viz-caption-block">
-          <strong>How to read this crime clock visualization</strong>
-          <p>This polar bar chart employs a circular 24-hour clock format to display the temporal distribution of crime incidents for each category. The <strong>circular (angular) axis</strong> represents the 24-hour cycle, with each radial segment corresponding to one hour (12 o'clock position = midnight/00:00, 3 o'clock position = 03:00, and so forth). The <strong>radial (distance) axis</strong> quantifies the average number of incidents per day — bars extending further from the center indicate higher incident frequencies at that specific hour. <span class="teal"><strong>Teal bars represent weekday patterns</strong></span> (Monday–Friday), while <span style="color:var(--orange)"><strong>orange bars represent weekend patterns</strong></span> (Saturday–Sunday). <strong><span style="color:var(--orange)">⚡ Interactive auto-updating feature:</span> As you scroll through the descriptive text on the left, the visualization automatically switches to display the corresponding crime category being discussed, enabling synchronized exploration of patterns and explanations.</strong> You may also manually select different crime categories using the dropdown menu above, or toggle between "Weekday," "Weekend," or "Both" display modes to compare temporal patterns across different days of the week. <strong>Hovering over any hourly segment</strong> reveals precise statistics in the sidebar, showing the exact average number of incidents recorded at that hour. <em>Interpretation: Longer bars indicate peak crime hours (temporal hotspots), while shorter bars indicate periods of reduced criminal activity.</em> This coordinated visualization approach allows you to observe how each crime type exhibits distinct temporal signatures — watch the clock dynamically transform as you progress through analyses of robbery, drug offenses, warrant services, and other categories, revealing the underlying rhythms that govern different types of criminal and police activity.</p>
+          <strong>Fig 03 — Polar Crime Clock: 24-Hour Temporal Distribution by Category</strong>
+          <p>Polar bar chart employing circular 24-hour format. <strong>Circular (angular) axis</strong>: hours (12 o'clock = midnight, 3 o'clock = 03:00, etc.). <strong>Radial (distance) axis</strong>: average incidents per day—longer bars indicate higher frequency. <span class="teal"><strong>Teal bars</strong></span>: weekdays (Mon–Fri). <span style="color:var(--orange)"><strong>Orange bars</strong></span>: weekends (Sat–Sun). <strong><span style="color:var(--orange)">⚡ Interactive auto-updating:</span></strong> visualization automatically switches categories as text is scrolled, enabling synchronized exploration. Manual controls: dropdown menu for category selection, toggle for "Weekday," "Weekend," or "Both" display modes. Hover reveals precise hourly statistics. Chart reveals distinct temporal signatures for each crime type.</p>
         </div>
       </div>
     </div>
@@ -1362,10 +1362,17 @@ document.querySelectorAll('.stat-cell').forEach(el => statObs.observe(el));
 
   function valToColor(v) {
     const t = (v-minV)/(maxV-minV);
-    if (t < 0.25) return `rgba(8,12,24,${0.4+t*1.5})`;
-    if (t < 0.5) return `hsl(200,${40+t*40}%,${15+t*15}%)`;
-    if (t < 0.75) return `hsl(${30-t*60},${70+t*20}%,${25+t*15}%)`;
-    return `hsl(10,85%,${30+t*20}%)`;
+    // Darker orange = more crime
+    // Low values: dark blue-grey (#04060e to #1a1f2e)
+    // Medium-low: dark teal (#1e2f3f)
+    // Medium: orange-brown (#3d2416)
+    // High: bright orange (#f0622a)
+    if (t < 0.2) return `rgba(4,6,14,${0.7+t*0.3})`; // Very dark background
+    if (t < 0.4) return `rgba(30,47,63,${0.6+t*0.4})`; // Dark teal
+    if (t < 0.6) return `rgba(61,36,22,${0.7+t*0.3})`; // Dark orange-brown
+    const brightness = 30 + t*35; // 30% to 65%
+    const saturation = 80 + t*15; // 80% to 95%
+    return `hsl(15,${saturation}%,${brightness}%)`; // Bright orange
   }
 
   const tooltip = document.getElementById('tooltip');
